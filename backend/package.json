@@ -5,6 +5,8 @@
   "main": "./src/server.js",
   "type": "module",
   "scripts": {
+    "migration": "psql -U jwt_auth_user -d jwt_auth_db -f ./src/db/migrations/migration.sql -h localhost",
+    "seeding": "psql -U jwt_auth_user -d jwt_auth_db -h localhost -f ./src/db/seeds/00_reset.sql && psql -U jwt_auth_user -d jwt_auth_db -h localhost -f ./src/db/seeds/01_user.sql",
     "dev": "nodemon ./src/server.js",
     "test": "vitest run",
     "test:watch": "vitest"
