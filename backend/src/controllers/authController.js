@@ -38,7 +38,6 @@ const authController = {
 
             // Check payload with DB
             const user = await User.findByEmail(normalizedEmail)
-            console.log(user)
             if (!user) {
                 return res.status(401).json({ message: "Couple identifiant/mot de passe invalide." })
             }
@@ -53,7 +52,6 @@ const authController = {
                 process.env.JWT_SECRET,
                 { expiresIn: ACCESS_TOKEN_TTL }
             )
-            console.log(accessToken)
 
             // Initial refresh token + hash
             const refreshToken = generateRefreshToken()
