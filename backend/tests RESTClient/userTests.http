@@ -3,9 +3,18 @@ GET http://localhost:3000/api/users
 Content-Type: application/json; charset=utf-8
 
 ### GET user by ID
-GET http://localhost:3000/api/users/id/2
+GET http://localhost:3000/api/users/id/5
 Content-Type: application/json; charset=utf-8
 
 ### GET user by email
 GET http://localhost:3000/api/users/email/testmail1@mail.com
 Content-Type: application/json; charset=utf-8
+
+### POST auth login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json; charset=utf-8
+
+{
+    "email": "     TESTMAIL1@mail.com      ",
+    "password": "MotDePasse01"
+}

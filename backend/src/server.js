@@ -10,6 +10,10 @@ await checkDatabaseConnection();
 
 const port = Number(process.env.PORT) || 3001
 
+if (!process.env.JWT_SECRET) {
+    throw new Error("JWT_SECRET manquant.")
+}
+
 app.use(express.json())
 
 app.use(router);

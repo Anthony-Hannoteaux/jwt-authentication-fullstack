@@ -1,6 +1,6 @@
 BEGIN;
 
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS sessions, users CASCADE;
 
 CREATE TABLE users (
     "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -8,6 +8,15 @@ CREATE TABLE users (
     "email" TEXT UNIQUE NOT NULL,
     "password" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE sessions (
+    "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "user_id" INTEGER NOT NULL REFERENCES "users"("id") ON DELETE CASCADE,
+    "refresh_token_hash" TEXT NOT NULL UNIQUE,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    "expires_at" TIMESTAMPTZ NOT NULL,
+    "revoked_at" TIMESTAMPTZ NULL
 );
 
 COMMIT;
