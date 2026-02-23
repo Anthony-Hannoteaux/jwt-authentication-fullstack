@@ -7,6 +7,7 @@ const router = express.Router();
 router.get("/api/users", userController.getAllUsers);
 router.get("/api/users/id/:id", userController.getUserById);
 
-router.post("/api/auth/login", authController.login)
+router.post("/api/auth/login", authController.login);
+router.post("/api/auth/refresh", authController.refresh);
 
 export default router;

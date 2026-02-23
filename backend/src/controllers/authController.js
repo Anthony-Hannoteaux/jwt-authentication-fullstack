@@ -20,6 +20,7 @@ function hashRefreshToken(refreshToken) {
 }
 
 const authController = {
+    // Login Request
     login: async (req, res) => {
         try {
             const { email, password } = req.body
@@ -48,7 +49,7 @@ const authController = {
 
             // Initial access token
             const accessToken = jwt.sign(
-                { id: user.id },
+                { sub: user.id },
                 process.env.JWT_SECRET,
                 { expiresIn: ACCESS_TOKEN_TTL }
             )
@@ -86,6 +87,38 @@ const authController = {
                     email: user.email
                 }
             })
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ message: "Erreur serveur" })
+        }
+    },
+
+    // Refresh Request
+    refresh: async (req, res) => {
+        try {
+            const refreshToken = req.cookies?.refresh_token
+            if (!refreshToken) {
+                return res.status(401).json({ message: "Non autorisé" })
+            }
+            const refreshHash = hashRefreshToken(refreshToken)
+
+            const session = await Session.findValidByRefreshToken(refreshHash)
+            if (!session) {
+                return res.status(401).json({ message: "Non autorisé" })
+            }
+
+            const user = await User.findById(session.user_id)
+            if (!user) {
+                return res.status(401).json({ message: "Non autorisé" })
+            }
+
+            const accessToken = jwt.sign(
+                { sub: user.id },
+                process.env.JWT_SECRET,
+                { expiresIn: ACCESS_TOKEN_TTL }
+            )
+
+            return res.status(200).json({ accessToken })
         } catch (error) {
             console.error(error)
             return res.status(500).json({ message: "Erreur serveur" })

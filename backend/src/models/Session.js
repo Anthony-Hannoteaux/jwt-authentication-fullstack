@@ -77,7 +77,7 @@ class Session {
 
     // METHOD
     static async findValidByRefreshToken(refreshTokenHash) {
-        if (refreshTokenHash !== "string" || refreshTokenHash.trim() === "") {
+        if (typeof refreshTokenHash !== "string" || refreshTokenHash.trim() === "") {
             return null
         }
 
@@ -96,7 +96,7 @@ class Session {
 
     static async revokedById(sessionId) {
         const parsed = Number(sessionId)
-        if (!Number.isInteger(sessionId) || parsed <= 0) {
+        if (!Number.isInteger(parsed) || parsed <= 0) {
             return false
         }
 
