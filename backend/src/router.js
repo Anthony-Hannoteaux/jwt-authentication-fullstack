@@ -9,5 +9,6 @@ router.get("/api/users/id/:id", userController.getUserById);
 
 router.post("/api/auth/login", authController.login);
 router.post("/api/auth/refresh", authController.refresh);
+router.post("/api/auth/logout", authController.logout);
 
 export default router;

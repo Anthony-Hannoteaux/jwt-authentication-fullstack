@@ -123,6 +123,37 @@ const authController = {
             console.error(error)
             return res.status(500).json({ message: "Erreur serveur" })
         }
+    },
+
+    // Logout request
+    logout: async (req, res) => {
+        try {
+            const refreshToken = req.cookies?.refresh_token
+            if (!refreshToken) {
+                res.clearCookie("refresh_token", {
+                    httpOnly: true,
+                    secure: false,
+                    sameSite: "lax",
+                })
+                return res.status(200).json({ message: "Session Fermée" })
+            }
+
+            const refreshHash = hashRefreshToken(refreshToken)
+            const session = await Session.findByRefreshToken(refreshHash)
+            if (session && !session.revoked_at) {
+                await Session.revokedById(session.id)
+            }
+
+            res.clearCookie("refresh_token", {
+                httpOnly: true,
+                secure: false,
+                sameSite: "lax",
+            })
+            return res.status(200).json({ message: "Session Fermée" })
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({ message: "Erreur serveur" })
+        }
     }
 }
 

@@ -67,7 +67,7 @@ class Session {
     }
 
     set expires_at(value) {
-        if (!value) throw new Error ("Date d'expiration obligatoire pour la session.")
+        if (!value) throw new Error("Date d'expiration obligatoire pour la session.")
         this.#expires_at = value
     }
 
@@ -88,10 +88,26 @@ class Session {
                 AND expires_at > NOW()
             LIMIT 1
             `, [
-                refreshTokenHash.trim()
-            ])
+            refreshTokenHash.trim()
+        ])
 
-            return result.rows[0] ?? null
+        return result.rows[0] ?? null
+    }
+
+    static async findByRefreshToken(refreshTokenHash) {
+        if (typeof refreshTokenHash !== "string" || refreshTokenHash.trim() === "") {
+            return null
+        }
+
+        const result = await pool.query(`SELECT id, user_id, expires_at, revoked_at
+            FROM sessions
+            WHERE refresh_token_hash = $1
+            LIMIT 1
+            `, [
+            refreshTokenHash.trim()
+        ])
+
+        return result.rows[0] ?? null
     }
 
     static async revokedById(sessionId) {
@@ -105,9 +121,9 @@ class Session {
             WHERE id = $1
                 AND revoked_at IS NULL
             `, [
-                parsed
-            ])
-        
+            parsed
+        ])
+
         return result.rowCount === 1
     }
 
@@ -116,9 +132,9 @@ class Session {
             VALUES ($1, $2, $3)
             RETURNING id, user_id, refresh_token_hash, created_at, expires_at, revoked_at
             `, [
-                this.#user_id, this.#refresh_token_hash, this.#expires_at
-            ])
-        
+            this.#user_id, this.#refresh_token_hash, this.#expires_at
+        ])
+
         return result.rows[0]
     }
 }
