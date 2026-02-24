@@ -1,23 +1,15 @@
-### GET all users
-GET http://localhost:3000/api/users
-Content-Type: application/json; charset=utf-8
-
-### GET user by ID
-GET http://localhost:3000/api/users/id/5
-Content-Type: application/json; charset=utf-8
-
-### GET user by email
-GET http://localhost:3000/api/users/email/testmail1@mail.com
-Content-Type: application/json; charset=utf-8
-
 ### POST auth login
 POST http://localhost:3000/api/auth/login
 Content-Type: application/json; charset=utf-8
 
 {
-    "email": "     TESTMAIL1@mail.com      ",
-    "password": "MotDePasse01"
+    "email": "     TESTMAIL2@mail.com      ",
+    "password": "MotDePasse02"
 }
+
+### GET user authentication page
+GET http://localhost:3000/api/user/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTc3MTg5NTA3NiwiZXhwIjoxNzcxODk1OTc2fQ.H_mRXf-KnosOMDQrqLo-loA9nV7f_ev8oQyECTX4obE
 
 ### POST refresh token
 POST http://localhost:3000/api/auth/refresh

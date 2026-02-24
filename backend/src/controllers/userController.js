@@ -34,6 +34,15 @@ const userController = {
         } catch (error) {
             return res.status(500).json({ message: 'Erreur serveur' })
         }
+    },
+
+    getMe: async (req, res) => {
+        try {
+            console.log("getMe récup ID", req.auth.userId)
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ message: 'Erreur serveur' })
+        }
     }
 }
 
