@@ -49,7 +49,7 @@ class Session {
 
     set user_id(value) {
         const parsed = Number(value)
-        if (!Number(parsed) || parsed <= 0) {
+        if (!Number.isInteger(parsed) || parsed <= 0) {
             throw new Error("Identifiant utilisateur invalide.")
         }
         this.#user_id = parsed

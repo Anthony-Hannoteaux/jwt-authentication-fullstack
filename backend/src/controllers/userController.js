@@ -38,7 +38,12 @@ const userController = {
 
     getMe: async (req, res) => {
         try {
-            console.log("getMe récup ID", req.auth.userId)
+            const userId = req.auth.userId;
+            const result = await User.findById(userId)
+            if (!result) {
+                return res.status(404).json({ message: 'Utilisateur introuvable' })
+            }
+            return res.status(200).json(result)
         } catch (error) {
             console.error(error)
             return res.status(500).json({ message: 'Erreur serveur' })
