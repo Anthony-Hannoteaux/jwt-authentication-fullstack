@@ -1,16 +1,26 @@
-export default function Input() {
+/**
+ * Composant UI d'un champ modulable accompagné de son label
+ * @param {Object} props
+ * @param {string} props.label
+ * @param {string} props.id
+ * @param {string} props.type
+ * @param {boolean} props.required
+ * @param {string} props.placeholder
+ * @param {Function} props.onChange
+ */
+export default function Input({ label, id, type, required, placeholder, onChange }) {
     return (
         <div className="input-group">
-            <label htmlFor="test">
-                Test Label
+            <label htmlFor={id}>
+                {label}
             </label>
             <input
-            type="text"
-            id="test"
-            name="test"
-            required
-            placeholder="Test..."
-            onChange={() => null}
+            type={type}
+            id={id}
+            name={id}
+            required={required}
+            placeholder={placeholder}
+            onChange={onChange}
             />
         </div>
     )
