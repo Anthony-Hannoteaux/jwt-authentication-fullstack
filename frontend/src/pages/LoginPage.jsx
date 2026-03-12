@@ -13,7 +13,9 @@ export default function LoginPage() {
                 placeholder={"exemple@email.com"}
                 onChange={() => null}
             />
-            <Button>
+            <Button
+            type="submit"
+            >
                 Envoyer
             </Button>
         </>
