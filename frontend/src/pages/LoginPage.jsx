@@ -1,4 +1,5 @@
 import Input from "../Components/ui/Input"
+import Button from "../Components/ui/Button"
 
 export default function LoginPage() {
     return (
@@ -12,6 +13,9 @@ export default function LoginPage() {
                 placeholder={"exemple@email.com"}
                 onChange={() => null}
             />
+            <Button>
+                Envoyer
+            </Button>
         </>
     )
 }
