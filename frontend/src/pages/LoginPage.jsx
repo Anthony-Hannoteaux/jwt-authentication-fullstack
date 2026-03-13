@@ -4,6 +4,8 @@ import Button from "../Components/ui/Button"
 import AuthLayout from "../Components/ui/AuthLayout"
 // Import du hook personnalisé
 import useForm from "../Hooks/useForm"
+// Import des méthodes API
+import loginUser from "../api/authApi"
 import { useState } from "react"
 
 export default function LoginPage() {
@@ -16,7 +18,7 @@ export default function LoginPage() {
     const [errorMsg, setErrorMsg] = useState('')
 
     // Gestion des données lors de la soumission du formulaire
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setErrorMsg('')
 
@@ -24,6 +26,7 @@ export default function LoginPage() {
         const trimmedEmail = email.trim()
         const trimmedPassword = password.trim()
         
+        // VERIFICATIONS FRONT
         // Vérification que la valeur de l'email ne soit pas une chaîne de caractère vide après nettoyage
         if (!trimmedEmail) {
             setErrorMsg("L'adresse Email est obligatoire.")
@@ -53,10 +56,18 @@ export default function LoginPage() {
             return
         }
 
-        console.log({
+        // APPEL API BACKEND
+        try {
+            const data = await loginUser({
             email: trimmedEmail,
             password: trimmedPassword
         })
+
+        console.log("Connexion OK : ", data)
+
+        } catch (error) {
+            setErrorMsg(error.message)
+        }
     }
 
     return (
@@ -71,8 +82,7 @@ export default function LoginPage() {
                         id={"email"}
                         type={"email"}
                         value={values.email}
-                        // required={false} -- Passage à false pour les tests de message d'erreur
-                        required={true}
+                        required={false}
                         placeholder={"exemple@email.com"}
                         onChange={handleChange}
                     />
@@ -81,8 +91,7 @@ export default function LoginPage() {
                         id={"password"}
                         type={"password"}
                         value={values.password}
-                        // required={false} -- Passage à false pour les tests de message d'erreur
-                        required={true}
+                        required={false}
                         onChange={handleChange}
                     />
                     <Button
