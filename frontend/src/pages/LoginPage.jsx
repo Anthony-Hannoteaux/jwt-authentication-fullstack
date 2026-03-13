@@ -4,6 +4,7 @@ import Button from "../Components/ui/Button"
 import AuthLayout from "../Components/ui/AuthLayout"
 // Import du hook personnalisé
 import useForm from "../Hooks/useForm"
+import { useState } from "react"
 
 export default function LoginPage() {
 
@@ -12,17 +13,65 @@ export default function LoginPage() {
         password: ""
     })
 
+    const [errorMsg, setErrorMsg] = useState('')
+
+    // Gestion des données lors de la soumission du formulaire
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setErrorMsg('')
+
+        const { email, password } = values
+        const trimmedEmail = email.trim()
+        const trimmedPassword = password.trim()
+        
+        // Vérification que la valeur de l'email ne soit pas une chaîne de caractère vide après nettoyage
+        if (!trimmedEmail) {
+            setErrorMsg("L'adresse Email est obligatoire.")
+            return
+        }
+        
+        // Vérification que la valeur de mot de passe ne soit pas une chaîne de caractère vide après nettoyage
+        if (!trimmedPassword) {
+            setErrorMsg("Le mot de passe est obligatoire.")
+            return
+        }
+
+        /**
+         * Regex pour vérification permettant de vérifier si :
+         * - Au moins 1 caractère avant "@"
+         * - Contient un "@"
+         * - Au moins 1 caractère après "@"
+         * - Un point
+         * - Pas d'espace
+         */
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Vérification de la validité de l'adresse email
+        // @link https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
+        if (!emailRegex.test(trimmedEmail)) {
+            setErrorMsg("Adresse Email invalide.")
+            return
+        }
+
+        console.log({
+            email: trimmedEmail,
+            password: trimmedPassword
+        })
+    }
+
     return (
         <>
             <AuthLayout
                 title={"Connexion :"}
             >
-                <form >
+                {errorMsg && <p>{errorMsg}</p>}
+                <form onSubmit={handleSubmit}>
                     <Input
                         label={"Email"}
                         id={"email"}
                         type={"email"}
                         value={values.email}
+                        // required={false} -- Passage à false pour les tests de message d'erreur
                         required={true}
                         placeholder={"exemple@email.com"}
                         onChange={handleChange}
@@ -32,6 +81,7 @@ export default function LoginPage() {
                         id={"password"}
                         type={"password"}
                         value={values.password}
+                        // required={false} -- Passage à false pour les tests de message d'erreur
                         required={true}
                         onChange={handleChange}
                     />
