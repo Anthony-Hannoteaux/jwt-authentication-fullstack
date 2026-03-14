@@ -6,13 +6,11 @@ import AuthLayout from "../Components/ui/AuthLayout"
 import useForm from "../Hooks/useForm"
 // Import du contexte d'authentification
 import { useAuth } from "../Context/AuthContext"
-// Import des méthodes API
-import loginUser from "../api/authApi"
 import { useState } from "react"
 
 export default function LoginPage() {
 
-    const { setUser, setAccessToken, user, isAuthenticated } = useAuth()
+    const { user, isAuthenticated, login } = useAuth()
 
     const { values, handleChange } = useForm({
         email: "",
@@ -62,17 +60,10 @@ export default function LoginPage() {
 
         // APPEL API BACKEND
         try {
-            const data = await loginUser({
+            const data = await login({
             email: trimmedEmail,
             password: trimmedPassword
         })
-
-        /**
-         * On met à jour les variables d'états de notre contexte d'authentification
-         * Avec les valeurs récupéré depuis le backend
-         */
-        setAccessToken(data.accessToken)
-        setUser(data.user)
 
         console.log("Connexion OK : ", data)
         
