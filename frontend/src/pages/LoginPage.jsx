@@ -4,11 +4,15 @@ import Button from "../Components/ui/Button"
 import AuthLayout from "../Components/ui/AuthLayout"
 // Import du hook personnalisé
 import useForm from "../Hooks/useForm"
+// Import du contexte d'authentification
+import { useAuth } from "../Context/AuthContext"
 // Import des méthodes API
 import loginUser from "../api/authApi"
 import { useState } from "react"
 
 export default function LoginPage() {
+
+    const { setUser, setAccessToken, user, isAuthenticated } = useAuth()
 
     const { values, handleChange } = useForm({
         email: "",
@@ -63,10 +67,17 @@ export default function LoginPage() {
             password: trimmedPassword
         })
 
-        console.log("Connexion OK : ", data)
+        /**
+         * On met à jour les variables d'états de notre contexte d'authentification
+         * Avec les valeurs récupéré depuis le backend
+         */
+        setAccessToken(data.accessToken)
+        setUser(data.user)
 
-        } catch (error) {
-            setErrorMsg(error.message)
+        console.log("Connexion OK : ", data)
+        
+    } catch (error) {
+        setErrorMsg(error.message)
         }
     }
 
@@ -75,6 +86,8 @@ export default function LoginPage() {
             <AuthLayout
                 title={"Connexion :"}
             >
+                {/* Test permettant de vérifier si les données on bien été récupéré depuis le backend */}
+                {isAuthenticated && <p>Utilisateur connecté : {user.username}</p>}
                 {errorMsg && <p>{errorMsg}</p>}
                 <form onSubmit={handleSubmit}>
                     <Input
