@@ -1,11 +1,13 @@
-import { createContext, useContext, useState } from "react";
-import loginUser from "../api/authApi";
+import { createContext, useContext, useEffect, useState } from "react";
+import { loginUser, refreshSession, logoutUser, getMe } from "../api/authApi";
 
 const AuthContext = createContext()
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null)
     const [accessToken, setAccessToken] = useState(null)
+
+    const [isAuthLoading, setIsAuthLoading] = useState(true)
 
     // On vérifie les valeurs booléenne de nos variables => Valeurs dérivées
     // Si user et accessToken sont "true" alors isAuthenticated est "true"
@@ -27,16 +29,43 @@ export function AuthProvider({ children }) {
     }
 
     // Fonction de déconnexion
-
-    const logout = () => {
-        setUser(null)
-        setAccessToken(null)
+    const logout = async () => {
+        try {
+            await logoutUser()
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setUser(null)
+            setAccessToken(null)
+        }
     }
+
+    useEffect(() => {
+        const restoreSession = async () => {
+            try {
+                const refreshData = await refreshSession()
+                const newAccessToken = refreshData.accessToken
+
+                setAccessToken(newAccessToken)
+                
+                const myData = await getMe(newAccessToken)
+                setUser(myData)
+            } catch (error) {
+                setUser(null)
+                setAccessToken(null)
+            } finally {
+                setIsAuthLoading(false)
+            }   
+        }
+
+        restoreSession()
+    }, [])
     
     const value = {
         user,
         accessToken,
         isAuthenticated,
+        isAuthLoading,
         login,
         logout
     }

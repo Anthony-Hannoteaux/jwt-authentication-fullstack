@@ -1,4 +1,4 @@
-import { replace, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 // Import des composants UI
 import Input from "../Components/ui/Input"
 import Button from "../Components/ui/Button"
@@ -62,7 +62,7 @@ export default function LoginPage() {
 
         // APPEL API BACKEND
         try {
-            const data = await login({
+            await login({
             email: trimmedEmail,
             password: trimmedPassword
         })

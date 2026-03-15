@@ -1,6 +1,7 @@
 const API_BASE_URL = "http://localhost:3000/api"
 
-export default async function loginUser(credentials) {
+// Requête permettant de faire appel à la route backend /login
+export async function loginUser(credentials) {
     const response = await fetch((`${API_BASE_URL}/auth/login`), {
         method: "POST",
         headers: {
@@ -18,3 +19,47 @@ export default async function loginUser(credentials) {
 
     return data
 }
+
+// Requête permettant de faire appel à la route backend /refresh (génération d'un nouvel access token)
+export async function refreshSession() {
+        const response = await fetch((`${API_BASE_URL}/auth/refresh`), {
+        method: "POST",
+        credentials: "include",
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+        throw new Error("Session expirée")
+    }
+
+    return data
+}
+
+// Requête permettant de faire appel à la route backend /logout
+export async function logoutUser() {
+    const response = await fetch((`${API_BASE_URL}/auth/logout`), {
+        method: "POST",
+        credentials: "include",
+    })
+}
+
+// Requête permettant de récupérer les informations utilisateurs en passant par l'access token
+export async function getMe(accessToken) {
+    const response = await fetch((`${API_BASE_URL}/user/me`), {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+        throw new Error("Impossible de récupérer l'utilisateur")
+    }
+
+    return data
+}
+
+export default loginUser
