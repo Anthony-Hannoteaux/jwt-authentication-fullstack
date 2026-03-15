@@ -1,3 +1,4 @@
+import { replace, useNavigate } from "react-router-dom"
 // Import des composants UI
 import Input from "../Components/ui/Input"
 import Button from "../Components/ui/Button"
@@ -9,6 +10,7 @@ import { useAuth } from "../Context/AuthContext"
 import { useState } from "react"
 
 export default function LoginPage() {
+    const navigate = useNavigate()
 
     const { user, isAuthenticated, login } = useAuth()
 
@@ -65,7 +67,7 @@ export default function LoginPage() {
             password: trimmedPassword
         })
 
-        console.log("Connexion OK : ", data)
+        navigate("/profile", { replace: true })
         
     } catch (error) {
         setErrorMsg(error.message)
