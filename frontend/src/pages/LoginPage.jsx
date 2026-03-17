@@ -7,12 +7,13 @@ import AuthLayout from "../Components/ui/AuthLayout"
 import useForm from "../Hooks/useForm"
 // Import du contexte d'authentification
 import { useAuth } from "../Context/AuthContext"
+
 import { useState } from "react"
 
 export default function LoginPage() {
     const navigate = useNavigate()
 
-    const { user, isAuthenticated, login } = useAuth()
+    const { login } = useAuth()
 
     const { values, handleChange } = useForm({
         email: "",
@@ -29,14 +30,14 @@ export default function LoginPage() {
         const { email, password } = values
         const trimmedEmail = email.trim()
         const trimmedPassword = password.trim()
-        
+
         // VERIFICATIONS FRONT
         // Vérification que la valeur de l'email ne soit pas une chaîne de caractère vide après nettoyage
         if (!trimmedEmail) {
             setErrorMsg("L'adresse Email est obligatoire.")
             return
         }
-        
+
         // Vérification que la valeur de mot de passe ne soit pas une chaîne de caractère vide après nettoyage
         if (!trimmedPassword) {
             setErrorMsg("Le mot de passe est obligatoire.")
@@ -63,50 +64,46 @@ export default function LoginPage() {
         // APPEL API BACKEND
         try {
             await login({
-            email: trimmedEmail,
-            password: trimmedPassword
-        })
+                email: trimmedEmail,
+                password: trimmedPassword
+            })
 
-        navigate("/profile", { replace: true })
-        
-    } catch (error) {
-        setErrorMsg(error.message)
+            navigate("/profile", { replace: true })
+
+        } catch (error) {
+            setErrorMsg(error.message)
         }
     }
 
     return (
-        <>
-            <AuthLayout
-                title={"Connexion :"}
-            >
-                {/* Test permettant de vérifier si les données on bien été récupéré depuis le backend */}
-                {isAuthenticated && <p>Utilisateur connecté : {user.username}</p>}
-                {errorMsg && <p>{errorMsg}</p>}
-                <form onSubmit={handleSubmit}>
-                    <Input
-                        label={"Email"}
-                        id={"email"}
-                        type={"email"}
-                        value={values.email}
-                        required={false}
-                        placeholder={"exemple@email.com"}
-                        onChange={handleChange}
-                    />
-                    <Input
-                        label={"Mot de passe"}
-                        id={"password"}
-                        type={"password"}
-                        value={values.password}
-                        required={false}
-                        onChange={handleChange}
-                    />
-                    <Button
-                        type="submit"
-                    >
-                        Envoyer
-                    </Button>
-                </form>
-            </AuthLayout>
-        </>
+        <AuthLayout
+            title={"Connexion :"}
+        >
+            {errorMsg && <p>{errorMsg}</p>}
+            <form onSubmit={handleSubmit}>
+                <Input
+                    label={"Email"}
+                    id={"email"}
+                    type={"email"}
+                    value={values.email}
+                    required={false}
+                    placeholder={"exemple@email.com"}
+                    onChange={handleChange}
+                />
+                <Input
+                    label={"Mot de passe"}
+                    id={"password"}
+                    type={"password"}
+                    value={values.password}
+                    required={false}
+                    onChange={handleChange}
+                />
+                <Button
+                    type="submit"
+                >
+                    Envoyer
+                </Button>
+            </form>
+        </AuthLayout>
     )
 }

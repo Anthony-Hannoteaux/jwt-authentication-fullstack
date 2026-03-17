@@ -61,5 +61,3 @@ export async function getMe(accessToken) {
 
     return data
 }
-
-export default loginUser
