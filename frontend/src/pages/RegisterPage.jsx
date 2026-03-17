@@ -3,8 +3,11 @@ import Input from "../Components/ui/Input"
 import Button from "../Components/ui/Button"
 
 import useForm from "../Hooks/useForm"
+import { useState } from "react"
 
 export default function RegisterPage() {
+
+    const [errorMsg, setErrorMsg] = useState("")
 
     const { values, handleChange } = useForm({
         username: "",
@@ -15,18 +18,60 @@ export default function RegisterPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(values)
-    } 
+        setErrorMsg("")
+        const { username, email, password, confirmed_password } = values
+        const trimmedEmail = email.trim()
+
+        // VERIFICATION FRONT
+        if (!username) {
+            setErrorMsg("Le nom d'utilisateur est obligatoire.")
+            return
+        }
+
+        if (!trimmedEmail) {
+            setErrorMsg("L'adresse email est obligatoire.")
+            return
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(trimmedEmail)) {
+            setErrorMsg("L'adresse Email est invalide.")
+            return
+        }
+
+        if (!password) {
+            setErrorMsg("Le mot de passe est obligatoire.")
+            return
+        }
+
+        if (!confirmed_password) {
+            setErrorMsg("La confirmation du mot de passe est obligatoire.")
+            return
+        }
+
+        if (password !== confirmed_password) {
+            setErrorMsg("Les mots de passe saisis ne sont pas identiques.")
+            return
+        }
+
+        console.log("username :", username)
+        console.log("email :", email)
+        console.log("password :", password)
+        console.log("confirmed_password :", confirmed_password)
+    }
 
     return (
         <AuthLayout
             title={"Inscription"}
         >
-            <form onSubmit={handleSubmit}>
+            {errorMsg && <p>{errorMsg}</p>}
+            {/* On désactive la validation native du navigateur pour ce formulaire
+            étant donné qu'on gère de façon manuelle nos vérifications front */}
+            <form onSubmit={handleSubmit} noValidate>
                 <Input
                     label={"Veuillez indiquer votre nom d'utilisateur"}
                     id={"username"}
-                    type={"username"}
+                    type={"text"}
                     value={values.username}
                     required={false}
                     placeholder={"anon12"}
@@ -60,7 +105,7 @@ export default function RegisterPage() {
                     onChange={handleChange}
                 />
                 <Button
-                type="submit"
+                    type="submit"
                 >
                     Envoyer
                 </Button>
