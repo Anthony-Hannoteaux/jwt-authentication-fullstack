@@ -28,19 +28,12 @@ export default function LoginPage() {
         setErrorMsg('')
 
         const { email, password } = values
-        const trimmedEmail = email.trim()
         const trimmedPassword = password.trim()
 
         // VERIFICATIONS FRONT
         // Vérification que la valeur de l'email ne soit pas une chaîne de caractère vide après nettoyage
-        if (!trimmedEmail) {
+        if (!email) {
             setErrorMsg("L'adresse Email est obligatoire.")
-            return
-        }
-
-        // Vérification que la valeur de mot de passe ne soit pas une chaîne de caractère vide après nettoyage
-        if (!trimmedPassword) {
-            setErrorMsg("Le mot de passe est obligatoire.")
             return
         }
 
@@ -56,15 +49,21 @@ export default function LoginPage() {
 
         // Vérification de la validité de l'adresse email
         // @link https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
-        if (!emailRegex.test(trimmedEmail)) {
+        if (!emailRegex.test(email)) {
             setErrorMsg("Adresse Email invalide.")
+            return
+        }
+
+        // Vérification que la valeur de mot de passe ne soit pas une chaîne de caractère vide après nettoyage
+        if (!trimmedPassword) {
+            setErrorMsg("Le mot de passe est obligatoire.")
             return
         }
 
         // APPEL API BACKEND
         try {
             await login({
-                email: trimmedEmail,
+                email: email,
                 password: trimmedPassword
             })
 
@@ -80,7 +79,7 @@ export default function LoginPage() {
             title={"Connexion :"}
         >
             {errorMsg && <p>{errorMsg}</p>}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} noValidate>
                 <Input
                     label={"Email"}
                     id={"email"}
