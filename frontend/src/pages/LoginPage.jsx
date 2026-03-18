@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 // Import des composants UI
 import Input from "../Components/ui/Input"
 import Button from "../Components/ui/Button"
@@ -12,7 +12,7 @@ import { useState } from "react"
 
 export default function LoginPage() {
     const navigate = useNavigate()
-
+    const location = useLocation()
     const { login } = useAuth()
 
     const { values, handleChange } = useForm({
@@ -20,6 +20,8 @@ export default function LoginPage() {
         password: ""
     })
 
+    // On affecte la valeur du state de navigation récupéré après le succès de l'inscription
+    const successMsg = location.state?.successMsg || null
     const [errorMsg, setErrorMsg] = useState('')
 
     // Gestion des données lors de la soumission du formulaire
@@ -78,6 +80,7 @@ export default function LoginPage() {
         <AuthLayout
             title={"Connexion :"}
         >
+            {successMsg && <p>{successMsg}</p>}
             {errorMsg && <p>{errorMsg}</p>}
             <form onSubmit={handleSubmit} noValidate>
                 <Input

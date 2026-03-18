@@ -2,10 +2,15 @@ import AuthLayout from "../Components/ui/AuthLayout"
 import Input from "../Components/ui/Input"
 import Button from "../Components/ui/Button"
 
+import { registerUser } from "../api/authApi"
+
 import useForm from "../Hooks/useForm"
+
+import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 
 export default function RegisterPage() {
+    const navigate = useNavigate()
 
     const [errorMsg, setErrorMsg] = useState("")
 
@@ -13,14 +18,14 @@ export default function RegisterPage() {
         username: "",
         email: "",
         password: "",
-        confirmed_password: "",
+        confirmPassword: "",
     })
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setErrorMsg("")
-        const { username, email, password, confirmed_password } = values
-        const trimmedEmail = email.trim()
+        const { username, email, password, confirmPassword } = values
+        const normalizedEmail = email.trim().toLowerCase()
 
         // VERIFICATION FRONT
         if (!username) {
@@ -28,13 +33,13 @@ export default function RegisterPage() {
             return
         }
 
-        if (!trimmedEmail) {
+        if (!normalizedEmail) {
             setErrorMsg("L'adresse email est obligatoire.")
             return
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(trimmedEmail)) {
+        if (!emailRegex.test(normalizedEmail)) {
             setErrorMsg("L'adresse Email est invalide.")
             return
         }
@@ -44,20 +49,35 @@ export default function RegisterPage() {
             return
         }
 
-        if (!confirmed_password) {
+        if (!confirmPassword) {
             setErrorMsg("La confirmation du mot de passe est obligatoire.")
             return
         }
 
-        if (password !== confirmed_password) {
+        if (password !== confirmPassword) {
             setErrorMsg("Les mots de passe saisis ne sont pas identiques.")
             return
         }
 
-        console.log("username :", username)
-        console.log("email :", email)
-        console.log("password :", password)
-        console.log("confirmed_password :", confirmed_password)
+        try {
+            const data = await registerUser({
+                username: username,
+                email: normalizedEmail,
+                password: password
+            })
+            /**
+             * En cas de succès on souhaite afficher le message qui le confirme
+             * On le ferra donc transiter lors de la redirection vers la page /login
+             * @link https://reactrouter.com/api/hooks/useNavigate#navigate-with-a-to-object
+             */
+            navigate("/login", {
+                replace: true,
+                state : {successMsg: data.message}
+            })
+
+        } catch (error) {
+            setErrorMsg(error.message)
+        }
     }
 
     return (
@@ -97,9 +117,9 @@ export default function RegisterPage() {
                 />
                 <Input
                     label={"Veuillez confirmer votre mot de passe."}
-                    id={"confirmed_password"}
+                    id={"confirmPassword"}
                     type={"password"}
-                    value={values.confirmed_password}
+                    value={values.confirmPassword}
                     required={false}
                     placeholder={""}
                     onChange={handleChange}
