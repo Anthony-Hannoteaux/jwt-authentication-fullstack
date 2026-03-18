@@ -154,6 +154,60 @@ const authController = {
             console.log(error)
             return res.status(500).json({ message: "Erreur serveur" })
         }
+    },
+
+    // Register request
+    register: async (req, res) => {
+        try {
+            const { username, email, password } = req.body
+
+            if (typeof username !== "string" || typeof email !== "string" || typeof password !== "string") {
+                return res.status(400).json({ message: "Les valeurs attendues doivent être des chaînes de caractères valides." })
+            }
+
+            const normalizedUsername = username.trim()
+            const normalizedEmail = email.trim().toLowerCase()
+
+            if (normalizedUsername === "") {
+                return res.status(400).json({ message: "Nom d'utilisateur requis." })
+            }
+
+            if (!validator.isEmail(normalizedEmail)) {
+                return res.status(400).json({ message: "Format d'email invalide." })
+            }
+
+            if (password.trim() === "") {
+                return res.status(400).json({ message: "Mot de passe requis." })
+            }
+
+            if (password.startsWith(" ") || password.endsWith(" ")) {
+                return res.status(400).json({ message: "Le mot de passe ne doit ni commencer, ni finir par un espace." })
+            }
+
+            if (!validator.isStrongPassword(password, {minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1})) {
+                return res.status(400).json({ message: "Le mot de passe doit comprendre au minimum 8 caractères, 1 minuscule, 1 majuscule, 1 chiffre et 1 symbole." })
+            }
+
+            const hashedPassword = await bcrypt.hash(password, 10)
+
+            const userCheckedByEmail = await User.findByEmail(normalizedEmail)
+            if (userCheckedByEmail !== null) {
+                return res.status(409).json({ message: "Adresse email déjà enregistrée." })
+            }
+
+            const payload = {
+                username: normalizedUsername,
+                email: normalizedEmail,
+                password: hashedPassword
+            }
+            const newUser = new User(payload)
+            await newUser.create()
+
+            return res.status(201).json({ message: "Inscription réalisée avec succès." })
+        } catch (error) {
+            console.error(error.message)
+            return res.status(500).json({ message: "Erreur serveur" })
+        }
     }
 }
 

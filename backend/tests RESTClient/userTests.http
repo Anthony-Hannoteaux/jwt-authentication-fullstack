@@ -19,3 +19,13 @@ Content-Type: application/json; charset=utf-8
 POST http://localhost:3000/api/auth/logout
 Content-Type: application/json; charset=utf-8
 
+
+### POST register
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json; charset=utf-8
+
+{
+    "username": "newUser",
+    "email": "         newUser@mail.com",
+    "password": "newUserpassword@01"
+}
