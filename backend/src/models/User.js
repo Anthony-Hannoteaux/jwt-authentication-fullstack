@@ -101,7 +101,7 @@ class User {
 
     static async existByUsername(username, excludeId) {
         const parsed = Number(excludeId);
-        if (!Number.isInteger(parsed) || parsed <= 0) return null
+        if (!Number.isInteger(parsed) || parsed <= 0) return false
 
         // On attend un résultat, qu'importe le contenu
         const result = await pool.query(`SELECT 1
@@ -112,6 +112,54 @@ class User {
             parsed
         ])
         return result.rowCount > 0;
+    }
+
+    static async existByEmail(email, excludeId) {
+        const parsed = Number(excludeId);
+        if (!Number.isInteger(parsed) || parsed <= 0) return false
+
+        const result = await pool.query(`SELECT 1
+            FROM users
+            WHERE email = $1
+            AND id != $2`, [
+            email,
+            parsed
+        ])
+        return result.rowCount > 0;
+    }
+
+    // Update username et/ou email
+    static async updateUserProfile(fieldsToUpdate, userId) {
+        const parsedId = Number(userId);
+        if (!Number.isInteger(parsedId) || parsedId <= 0) return false
+
+        // WhiteList (sécurisation des colonnes de notre table)
+        const allowedFields = ["username", "email"]
+
+        /**
+         * On récupère sous forme de tableau les paires clé/valeur de notre objet
+         * @link https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+         */ 
+        const entries = Object.entries(fieldsToUpdate)
+        // On filtre notre objet, permettant de n'autoriser que les colonnes indiquées
+        const filteredFields = entries.filter(([key]) => allowedFields.includes(key))
+        // On récupère dans un tableau les valeur qui servirons à créer notre tableau de paramètre
+        const values = filteredFields.map(([, value]) => value)
+        // On y ajoute l'ID de l'utilisateur
+        values.push(parsedId)
+        
+        // On dynamise l'instruction de mise à jour de nos valeurs
+        const updatedValues = filteredFields.map(([key], index) => {
+            return `"${key}" = $${index + 1}`
+        })
+
+        const result = await pool.query(`UPDATE users
+                SET ${updatedValues.join(", ")}
+                WHERE "id" = $${filteredFields.length + 1}
+                RETURNING "id", "username", "email"
+            `, values)
+
+        return result.rows[0] ?? null
     }
 
     async create() {

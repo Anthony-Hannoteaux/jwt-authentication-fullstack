@@ -32,10 +32,10 @@ Content-Type: application/json; charset=utf-8
 
 ### PATCH username and email
 PATCH http://localhost:3000/api/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTc3Mzk1MzkwMiwiZXhwIjoxNzczOTU0ODAyfQ.D_0E_rLbSuJffEFrgFxZek4mFIeVsJP4VhnthSrMqcs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTc3NDQ2ODE4NywiZXhwIjoxNzc0NDY5MDg3fQ.D5plOl_EfIulld1A0E97YwDhO6tdajCIa3cNK4zuzE0
 Content-Type: application/json; charset=utf-8
 
 {
-    "username": "NouveauNom",
-    "email" : "TESTMAIL1@mail.com"
+    "username": "userTest11",
+    "email" : "TESTMAIL11@mail.com"
 }
