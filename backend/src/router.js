@@ -11,5 +11,6 @@ router.post("/api/auth/refresh", authController.refresh);
 router.post("/api/auth/logout", authController.logout);
 
 router.get("/api/user/me", authMiddleware, userController.getMe)
+router.patch("/api/user/me", authMiddleware, userController.updateProfileUser)
 
 export default router;

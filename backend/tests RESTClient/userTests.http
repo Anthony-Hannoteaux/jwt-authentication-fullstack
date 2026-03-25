@@ -29,3 +29,13 @@ Content-Type: application/json; charset=utf-8
     "email": "         newUser@mail.com",
     "password": "newUserpassword@01"
 }
+
+### PATCH username and email
+PATCH http://localhost:3000/api/user/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTc3Mzk1MzkwMiwiZXhwIjoxNzczOTU0ODAyfQ.D_0E_rLbSuJffEFrgFxZek4mFIeVsJP4VhnthSrMqcs
+Content-Type: application/json; charset=utf-8
+
+{
+    "username": "NouveauNom",
+    "email" : "TESTMAIL1@mail.com"
+}

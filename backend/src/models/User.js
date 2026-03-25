@@ -20,7 +20,7 @@ class User {
     get id() {
         return this.#id;
     }
-    
+
     get username() {
         return this.#username;
     }
@@ -41,7 +41,7 @@ class User {
     set id(value) {
         this.#id = value
     }
-    
+
     set username(value) {
         if (typeof value !== "string") {
             throw new Error("Votre nom d'utilisateur doit obligatoirement être une chaîne de caractère.")
@@ -84,9 +84,9 @@ class User {
         const result = await pool.query(`SELECT id, username, email, created_at
             FROM users
             WHERE id = $1`, [
-                parsed
-            ])
-            return result.rows[0] ?? null;
+            parsed
+        ])
+        return result.rows[0] ?? null;
     }
 
     static async findByEmail(email) {
@@ -94,9 +94,24 @@ class User {
         const result = await pool.query(`SELECT *
             FROM users
             WHERE email = $1`, [
-                normalized
-            ])
-            return result.rows[0] ?? null;
+            normalized
+        ])
+        return result.rows[0] ?? null;
+    }
+
+    static async existByUsername(username, excludeId) {
+        const parsed = Number(excludeId);
+        if (!Number.isInteger(parsed) || parsed <= 0) return null
+
+        // On attend un résultat, qu'importe le contenu
+        const result = await pool.query(`SELECT 1
+            FROM users
+            WHERE LOWER(username) = LOWER($1)
+            AND id != $2`, [
+            username,
+            parsed
+        ])
+        return result.rowCount > 0;
     }
 
     async create() {
@@ -104,11 +119,11 @@ class User {
             (username, email, password)
             VALUES ($1, $2, $3)
             RETURNING id, username, email, created_at`, [
-                this.#username,
-                this.#email,
-                this.#password
-            ])
-            return result.rows[0]
+            this.#username,
+            this.#email,
+            this.#password
+        ])
+        return result.rows[0]
     }
 
 }
