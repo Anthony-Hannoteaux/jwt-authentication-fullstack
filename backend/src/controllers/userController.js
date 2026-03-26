@@ -68,8 +68,11 @@ const userController = {
             }
 
             const result = await User.updateUserProfile(fieldsToUpdate, userId)
+            if (!result) {
+                return res.status(500).json({ message: 'Erreur serveur' })
+            }
 
-            return res.status(200).json({ message: "Modification du mot de passe réalisée avec succès" })
+            return res.status(200).json({ message: "Modification réalisée avec succès" })
 
         } catch (error) {
             console.error(error)
