@@ -3,8 +3,8 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json; charset=utf-8
 
 {
-    "email": "     TESTMAIL1@mail.com      ",
-    "password": "MotDePasse01"
+    "email": "newUser@mail.com",
+    "password": "newUserpassword@01"
 }
 
 ### GET user authentication page
@@ -42,10 +42,11 @@ Content-Type: application/json; charset=utf-8
 
 ### PATCH user password
 PATCH http://localhost:3000/api/user/me/password
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTc3NDUzODQ4NSwiZXhwIjoxNzc0NTM5Mzg1fQ.tM3jkePk5HMWYXakWGQtEnxPfYMj4HAoQ66Vrf1l-l8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImlhdCI6MTc3NDU0MzA4NywiZXhwIjoxNzc0NTQzOTg3fQ._Y-vhZfiNTTLKpWPbyuQ4f1y-0ugFVLSQjFjGDH5Hvg
 Content-Type: application/json; charset=utf-8
 
 {
-    "currentPassword": "MotDePasse02",
-    "newPassword": "NouveauMotDePasse@01"
+    "currentPassword": "NouveauMotDePasse@04",
+    "newPassword": "NouveauMotDePasse@03",
+    "confirmPassword": "NouveauMotDePasse@03"
 }
