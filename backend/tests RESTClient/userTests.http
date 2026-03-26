@@ -30,12 +30,22 @@ Content-Type: application/json; charset=utf-8
     "password": "newUserpassword@01"
 }
 
-### PATCH username and email
+### PATCH user username and email
 PATCH http://localhost:3000/api/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTc3NDQ2ODE4NywiZXhwIjoxNzc0NDY5MDg3fQ.D5plOl_EfIulld1A0E97YwDhO6tdajCIa3cNK4zuzE0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTc3NDQ3MzE1OCwiZXhwIjoxNzc0NDc0MDU4fQ.1oasmNSROzWyLsgng5IiLHlN61iuhECo3IMFVWqO6KI
 Content-Type: application/json; charset=utf-8
 
 {
     "username": "userTest11",
     "email" : "TESTMAIL11@mail.com"
+}
+
+### PATCH user password
+PATCH http://localhost:3000/api/user/me/password
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTc3NDUzODQ4NSwiZXhwIjoxNzc0NTM5Mzg1fQ.tM3jkePk5HMWYXakWGQtEnxPfYMj4HAoQ66Vrf1l-l8
+Content-Type: application/json; charset=utf-8
+
+{
+    "currentPassword": "MotDePasse02",
+    "newPassword": "NouveauMotDePasse@01"
 }

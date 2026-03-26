@@ -89,6 +89,19 @@ class User {
         return result.rows[0] ?? null;
     }
 
+    static async findUserPasswordById(userId) {
+        const parsedId = Number(userId)
+        if (!Number.isInteger(parsedId) || parsedId <= 0) return false
+
+        const result = await pool.query(`SELECT "id", "password"
+            FROM users
+            WHERE "id" = $1
+            `, [
+                parsedId
+        ])
+        return result.rows[0] ?? null
+    }
+
     static async findByEmail(email) {
         const normalized = String(email).trim().toLowerCase()
         const result = await pool.query(`SELECT *
@@ -139,7 +152,7 @@ class User {
         /**
          * On récupère sous forme de tableau les paires clé/valeur de notre objet
          * @link https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
-         */ 
+         */
         const entries = Object.entries(fieldsToUpdate)
         // On filtre notre objet, permettant de n'autoriser que les colonnes indiquées
         const filteredFields = entries.filter(([key]) => allowedFields.includes(key))
@@ -147,7 +160,7 @@ class User {
         const values = filteredFields.map(([, value]) => value)
         // On y ajoute l'ID de l'utilisateur
         values.push(parsedId)
-        
+
         // On dynamise l'instruction de mise à jour de nos valeurs
         const updatedValues = filteredFields.map(([key], index) => {
             return `"${key}" = $${index + 1}`
@@ -158,6 +171,23 @@ class User {
                 WHERE "id" = $${filteredFields.length + 1}
                 RETURNING "id", "username", "email"
             `, values)
+
+        return result.rows[0] ?? null
+    }
+
+    static async updateUserPassword(hashedPassword, userId) {
+        const parsedId = Number(userId);
+        if (!Number.isInteger(parsedId) || parsedId <= 0) return false
+        if (typeof hashedPassword !== "string" || hashedPassword === "") return null
+
+        const result = await pool.query(`UPDATE users
+                SET "password" = $1
+                WHERE "id" = $2
+                RETURNING "id"
+            `, [
+                hashedPassword,
+                parsedId
+            ])
 
         return result.rows[0] ?? null
     }
