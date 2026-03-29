@@ -72,7 +72,10 @@ const userController = {
                 return res.status(500).json({ message: 'Erreur serveur' })
             }
 
-            return res.status(200).json({ message: "Modification réalisée avec succès" })
+            return res.status(200).json({
+                message: "Modification réalisée avec succès",
+                user: result
+            })
 
         } catch (error) {
             console.error(error)
