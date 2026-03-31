@@ -8,6 +8,7 @@ import RegisterPage from "../pages/RegisterPage";
 import ProfilePage from "../pages/ProfilePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import SettingsPage from "../pages/SettingsPage";
+import ChangePasswordPage from "../pages/ChangePasswordPage";
 
 
 export default function AppRouter() {
@@ -22,6 +23,7 @@ export default function AppRouter() {
             <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/settings/password" element={<ChangePasswordPage />} />
             </Route>
 
             <Route path="*" element={<NotFoundPage />} />
