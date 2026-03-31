@@ -3,6 +3,7 @@ import Input from "../Components/ui/Input"
 import Button from "../Components/ui/Button"
 
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import { useAuth } from "../Context/AuthContext"
 
 import useForm from "../Hooks/useForm"
@@ -81,12 +82,15 @@ export default function SettingsPage() {
                 </Button>
             </form>
             <div>
-                <p>Lien vers la modification du mot de passe</p>
-                <Button
-                    onClick={() => null}
+                {
+                    // Accessibilité \\
+                    /* <p>Lien vers la modification du mot de passe</p> */
+                }
+                <Link
+                    to={"/settings/password"}
                 >
                     Modifier votre mot de passe
-                </Button>
+                </Link>
             </div>
         </AuthLayout>
     )
