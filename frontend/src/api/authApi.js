@@ -80,3 +80,24 @@ export async function getMe(accessToken) {
 
     return data
 }
+
+// Requête permettant de réaliser l'update des données username et email de l'utilisateur connecté
+export async function updateProfile(accessToken, credentials) {
+    const response = await fetch((`${API_BASE_URL}/user/me`), {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`
+        },
+        credentials: "include",
+        body: JSON.stringify(credentials)
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+        throw new Error(data.message || "Une erreur est survenue lors de la mise à jour des données.")
+    }
+
+    return data
+}

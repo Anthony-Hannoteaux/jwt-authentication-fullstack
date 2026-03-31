@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { loginUser, refreshSession, logoutUser, getMe } from "../api/authApi";
+import { loginUser, refreshSession, logoutUser, getMe, updateProfile } from "../api/authApi";
 
 const AuthContext = createContext()
 
@@ -40,6 +40,16 @@ export function AuthProvider({ children }) {
         }
     }
 
+    // Fonction update username, email
+    const updateUserProfile = async (credentials) => {
+
+        const data = await updateProfile(accessToken, credentials)
+        if (data.user) {
+            setUser(data.user)
+        }
+        return data
+    }
+
     useEffect(() => {
         const restoreSession = async () => {
             try {
@@ -47,7 +57,7 @@ export function AuthProvider({ children }) {
                 const newAccessToken = refreshData.accessToken
 
                 setAccessToken(newAccessToken)
-                
+
                 const myData = await getMe(newAccessToken)
                 setUser(myData)
             } catch (error) {
@@ -55,19 +65,20 @@ export function AuthProvider({ children }) {
                 setAccessToken(null)
             } finally {
                 setIsAuthLoading(false)
-            }   
+            }
         }
 
         restoreSession()
     }, [])
-    
+
     const value = {
         user,
         accessToken,
         isAuthenticated,
         isAuthLoading,
         login,
-        logout
+        logout,
+        updateUserProfile
     }
 
     return (
