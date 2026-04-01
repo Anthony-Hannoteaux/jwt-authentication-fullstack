@@ -22,7 +22,7 @@ export async function loginUser(credentials) {
 
 // Requête permettant de faire appel à la route backend /refresh (génération d'un nouvel access token)
 export async function refreshSession() {
-        const response = await fetch((`${API_BASE_URL}/auth/refresh`), {
+    const response = await fetch((`${API_BASE_URL}/auth/refresh`), {
         method: "POST",
         credentials: "include",
     })
@@ -84,6 +84,27 @@ export async function getMe(accessToken) {
 // Requête permettant de réaliser l'update des données username et email de l'utilisateur connecté
 export async function updateProfile(accessToken, credentials) {
     const response = await fetch((`${API_BASE_URL}/user/me`), {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`
+        },
+        credentials: "include",
+        body: JSON.stringify(credentials)
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+        throw new Error(data.message || "Une erreur est survenue lors de la mise à jour des données.")
+    }
+
+    return data
+}
+
+// Requête permettant de réaliser l'update du mot de passe de l'utilisateur connecté
+export async function updatePassword(accessToken, credentials) {
+    const response = await fetch((`${API_BASE_URL}/user/me/password`), {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",

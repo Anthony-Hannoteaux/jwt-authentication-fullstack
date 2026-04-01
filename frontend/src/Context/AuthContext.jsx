@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { loginUser, refreshSession, logoutUser, getMe, updateProfile } from "../api/authApi";
+import { loginUser, refreshSession, logoutUser, getMe, updateProfile, updatePassword } from "../api/authApi";
 
 const AuthContext = createContext()
 
@@ -50,6 +50,12 @@ export function AuthProvider({ children }) {
         return data
     }
 
+    // Fonction update password
+    const updateUserPassword = async (credentials) => {
+        const data = await updatePassword(accessToken, credentials)
+        return data
+    }
+
     useEffect(() => {
         const restoreSession = async () => {
             try {
@@ -78,7 +84,8 @@ export function AuthProvider({ children }) {
         isAuthLoading,
         login,
         logout,
-        updateUserProfile
+        updateUserProfile,
+        updateUserPassword
     }
 
     return (
