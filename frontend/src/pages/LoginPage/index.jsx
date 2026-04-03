@@ -1,12 +1,12 @@
 import { useNavigate, useLocation } from "react-router-dom"
 // Import des composants UI
-import Input from "../Components/ui/Input"
-import Button from "../Components/ui/Button"
-import AuthLayout from "../Components/ui/AuthLayout"
+import Input from "../../Components/ui/Input"
+import Button from "../../Components/ui/Button"
+import AuthLayout from "../../Components/ui/AuthLayout"
 // Import du hook personnalisé
-import useForm from "../Hooks/useForm"
+import useForm from "../../Hooks/useForm"
 // Import du contexte d'authentification
-import { useAuth } from "../Context/AuthContext"
+import { useAuth } from "../../Context/AuthContext"
 
 import { useState } from "react"
 

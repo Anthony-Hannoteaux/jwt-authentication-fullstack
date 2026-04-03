@@ -1,13 +1,13 @@
-import AuthLayout from "../Components/ui/AuthLayout"
-import Input from "../Components/ui/Input"
-import Button from "../Components/ui/Button"
-
-import { registerUser } from "../api/authApi"
-
-import useForm from "../Hooks/useForm"
-
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+
+import { registerUser } from "../../api/authApi"
+
+import AuthLayout from "../../Components/ui/AuthLayout"
+import Input from "../../Components/ui/Input"
+import Button from "../../Components/ui/Button"
+
+import useForm from "../../Hooks/useForm"
 
 export default function RegisterPage() {
     const navigate = useNavigate()

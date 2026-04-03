@@ -1,12 +1,12 @@
-import AuthLayout from "../Components/ui/AuthLayout"
-import Input from "../Components/ui/Input"
-import Button from "../Components/ui/Button"
+import AuthLayout from "../../Components/ui/AuthLayout"
+import Input from "../../Components/ui/Input"
+import Button from "../../Components/ui/Button"
 
+import { useAuth } from "../../Context/AuthContext"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { useAuth } from "../Context/AuthContext"
 
-import useForm from "../Hooks/useForm"
+import useForm from "../../Hooks/useForm"
 
 export default function SettingsPage() {
 

@@ -3,12 +3,12 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
 
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-import ProfilePage from "../pages/ProfilePage";
-import NotFoundPage from "../pages/NotFoundPage";
-import SettingsPage from "../pages/SettingsPage";
-import ChangePasswordPage from "../pages/ChangePasswordPage";
+import LoginPage from "../Pages/LoginPage";
+import RegisterPage from "../Pages/RegisterPage";
+import ProfilePage from "../Pages/ProfilePage";
+import NotFoundPage from "../Pages/NotFoundPage";
+import SettingsPage from "../Pages/SettingsPage";
+import ChangePasswordPage from "../Pages/ChangePasswordPage";
 
 
 export default function AppRouter() {

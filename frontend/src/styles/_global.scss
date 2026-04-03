@@ -1,0 +1,7 @@
+@use './var';
+// #66B2D6
+
+body {
+    background: linear-gradient(var.$primary-backgroundColor, var.$secondary-backgroundColor);
+    color: #fff
+}
