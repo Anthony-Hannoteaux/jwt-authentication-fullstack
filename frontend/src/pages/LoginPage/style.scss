@@ -1,0 +1,26 @@
+@use '../../styles/var';
+@use '../../styles/mixin';
+
+// Bouton de soumission de formulaire
+.login-btn-wrapper button {
+    margin: 1rem 0;
+    padding: 1.5rem;
+    width: 100%;
+    
+    background-color: var.$ternary-backgroundColor;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    font-weight: 600;
+    
+    border-radius: 15px;
+}
+
+// Messages d'information destinés à l'utilisateur
+.error-msg {
+    @include mixin.user-indication-msg(#ff1e00)
+}
+
+.success-msg {
+    @include mixin.user-indication-msg(#00e900)
+}

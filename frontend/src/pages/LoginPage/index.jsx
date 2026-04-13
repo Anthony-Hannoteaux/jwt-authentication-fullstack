@@ -1,3 +1,4 @@
+import "./style.scss"
 import { useNavigate, useLocation } from "react-router-dom"
 // Import des composants UI
 import Input from "../../Components/ui/Input"
@@ -78,10 +79,10 @@ export default function LoginPage() {
 
     return (
         <AuthLayout
-            title={"Connexion :"}
+            title={"Connexion"}
         >
-            {successMsg && <p>{successMsg}</p>}
-            {errorMsg && <p>{errorMsg}</p>}
+            {successMsg && <p className="success-msg">{successMsg}</p>}
+            {errorMsg && <p className="error-msg" >{errorMsg}</p>}
             <form onSubmit={handleSubmit} noValidate>
                 <Input
                     label={"Email"}
@@ -100,11 +101,13 @@ export default function LoginPage() {
                     required={false}
                     onChange={handleChange}
                 />
-                <Button
-                    type="submit"
-                >
-                    Envoyer
-                </Button>
+                <div className="login-btn-wrapper">
+                    <Button
+                        type="submit"
+                    >
+                        Envoyer
+                    </Button>
+                </div>
             </form>
         </AuthLayout>
     )

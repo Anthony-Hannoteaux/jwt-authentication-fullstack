@@ -1,7 +1,7 @@
 @use './var';
-// #66B2D6
 
 body {
-    background: linear-gradient(var.$primary-backgroundColor, var.$secondary-backgroundColor);
-    color: #fff
+    background-image: linear-gradient(144deg, var.$primary-backgroundColor, var.$secondary-backgroundColor 50%, var.$ternary-backgroundColor);
+    font-family: var.$primary-font;
+    color: #fff;
 }

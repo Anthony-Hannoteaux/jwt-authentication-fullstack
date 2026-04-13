@@ -1,0 +1,10 @@
+@mixin user-indication-msg($bg-color) {
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+    font-size: 1.2rem;
+    text-align: center;
+
+    border-radius: 15px;
+    background-color: $bg-color;
+}

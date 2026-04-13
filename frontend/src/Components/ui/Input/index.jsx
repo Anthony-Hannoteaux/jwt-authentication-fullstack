@@ -1,3 +1,5 @@
+import "./style.scss"
+
 /**
  * Composant UI d'un champ modulable accompagné de son label
  * @param {Object} props
@@ -12,10 +14,14 @@
 export default function Input({ label, id, type, value, required, placeholder, onChange }) {
     return (
         <div className="input-group">
-            <label htmlFor={id}>
+            <label 
+            htmlFor={id}
+            className="input-group__label"
+            >
                 {label}
             </label>
             <input
+            className="input-group__input"
             type={type}
             id={id}
             name={id}

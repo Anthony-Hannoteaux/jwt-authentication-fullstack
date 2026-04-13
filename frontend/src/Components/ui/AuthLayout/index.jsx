@@ -1,3 +1,5 @@
+import "./style.scss"
+
 /**
  * Layout générique des formulaires de soumission (Connexion/Inscription)
  * @param {Object} props
@@ -6,9 +8,9 @@
  */
 export default function AuthLayout({ title, children }) {
     return (
-        <main className="main">
-            <section className="section">
-                <h1 className="main-title">
+        <main className="auth-layout">
+            <section className="auth-layout-section">
+                <h1 className="auth-layout-section-title">
                     {title}
                 </h1>
                 {children}
