@@ -9,7 +9,7 @@ import useForm from "../../Hooks/useForm"
 // Import du contexte d'authentification
 import { useAuth } from "../../Context/AuthContext"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function LoginPage() {
     const navigate = useNavigate()
@@ -21,14 +21,24 @@ export default function LoginPage() {
         password: ""
     })
 
-    // On affecte la valeur du state de navigation récupéré après le succès de l'inscription
-    const successMsg = location.state?.successMsg || null
     const [errorMsg, setErrorMsg] = useState('')
+    const [successMsg, setSuccessMsg] = useState('')
+    
+    // On affecte la valeur du state de navigation récupéré après le succès de l'inscription
+    useEffect(() => {
+        if (location.state?.successMsg) {
+            setSuccessMsg(location.state.successMsg)
+            navigate(location.pathname, { replace: true, state: "" })
+        }
+
+    }, [location, navigate])
+
 
     // Gestion des données lors de la soumission du formulaire
     const handleSubmit = async (e) => {
         e.preventDefault()
         setErrorMsg('')
+        setSuccessMsg('')
 
         const { email, password } = values
         const trimmedPassword = password.trim()
