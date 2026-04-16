@@ -1,5 +1,5 @@
 import "./style.scss"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate, useLocation, Link } from "react-router-dom"
 // Import des composants UI
 import Input from "../../Components/ui/Input"
 import Button from "../../Components/ui/Button"
@@ -23,7 +23,7 @@ export default function LoginPage() {
 
     const [errorMsg, setErrorMsg] = useState('')
     const [successMsg, setSuccessMsg] = useState('')
-    
+
     // On affecte la valeur du state de navigation récupéré après le succès de l'inscription
     useEffect(() => {
         if (location.state?.successMsg) {
@@ -111,7 +111,7 @@ export default function LoginPage() {
                     required={false}
                     onChange={handleChange}
                 />
-                <div className="login-btn-wrapper">
+                <div className="login__btn__wrapper">
                     <Button
                         type="submit"
                     >
@@ -119,6 +119,9 @@ export default function LoginPage() {
                     </Button>
                 </div>
             </form>
+            <div className="register__link__wrapper">
+                <span>Pas encore de compte ?</span> <Link to={"/register"}>Créer un compte</Link>
+            </div>
         </AuthLayout>
     )
 }

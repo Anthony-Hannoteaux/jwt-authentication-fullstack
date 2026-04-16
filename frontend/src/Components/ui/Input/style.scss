@@ -1,16 +1,44 @@
+@use "../../../styles/var";
+
 .input-group {
     display: flex;
     flex-direction: column;
 
     &__label {
-    font-size: 1.2rem;
-    margin-left: .8rem;
-    margin-bottom: 0.5rem;
+        margin-left: .8rem;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        color: var.$color-primary-light;
     }
 
     &__input {
         margin-bottom: 1rem;
         padding: 1.3rem;
-        border-radius: 30px;
+
+        background: rgba(0, 0, 0, 0.2);
+        color: var.$color-primary-light;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+
+        &::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        &:focus {
+            outline: none;
+            border: 2px solid rgba(255, 255, 255, 0.65);
+        }
+
     }
+}
+
+// Gestion du champ lors de la proposition d'autocomplétion
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.2) inset !important;
+    -webkit-text-fill-color: var.$color-primary-light !important;
+    color: var.$color-primary-light;
+    transition: background-color 9999s ease-in-out 0s;
 }

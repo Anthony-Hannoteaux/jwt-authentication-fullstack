@@ -1,7 +1,14 @@
 @use './var';
 
+html,
+body,
+#root {
+    height: 100%;
+}
+
 body {
-    background-image: linear-gradient(144deg, var.$primary-backgroundColor, var.$secondary-backgroundColor 50%, var.$ternary-backgroundColor);
+    background: url(../assets/tiles.png);
+    background-size: cover;
     font-family: var.$primary-font;
     color: #fff;
 }

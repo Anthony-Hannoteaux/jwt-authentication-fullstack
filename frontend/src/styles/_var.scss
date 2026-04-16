@@ -1,7 +1,21 @@
-// Couleurs d'ambiance
-$primary-backgroundColor: #af40ff;
-$secondary-backgroundColor: #5b42f3;
-$ternary-backgroundColor: #00ddeb;
+// Couleurs principales
+$color-primary: #4F8CFF;
+$color-primary-dark: #3A6FD9;
+$color-primary-light: #E6F0FF;
+
+$color-accent: #2EC4B6;
+
+
+// Liens, couleurs chaudes
+$color-link: #F2C94C;
+$color-link-hover: #FFE08A;
+
+// Textes, contenus
+$color-title: #FFD978;
+
+// Etats
+$color-error: #FF1F2A;
+$color-success: #2EC4B6;
 
 // Polices d'écriture
 $primary-font: "Inter", sans-serif;
