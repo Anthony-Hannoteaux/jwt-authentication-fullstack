@@ -1,3 +1,5 @@
+import "./style.scss"
+
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 
@@ -72,7 +74,7 @@ export default function RegisterPage() {
              */
             navigate("/login", {
                 replace: true,
-                state : {successMsg: data.message}
+                state: { successMsg: data.message }
             })
 
         } catch (error) {
@@ -84,7 +86,7 @@ export default function RegisterPage() {
         <AuthLayout
             title={"Inscription"}
         >
-            {errorMsg && <p>{errorMsg}</p>}
+            {errorMsg && <p className="error-msg">{errorMsg}</p>}
             {/* On désactive la validation native du navigateur pour ce formulaire
             étant donné qu'on gère de façon manuelle nos vérifications front */}
             <form onSubmit={handleSubmit} noValidate>
@@ -124,11 +126,13 @@ export default function RegisterPage() {
                     placeholder={""}
                     onChange={handleChange}
                 />
-                <Button
-                    type="submit"
-                >
-                    Envoyer
-                </Button>
+                <div className="register__btn__wrapper">
+                    <Button
+                        type="submit"
+                    >
+                        Envoyer
+                    </Button>
+                </div>
             </form>
         </AuthLayout>
     )
