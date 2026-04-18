@@ -1,3 +1,5 @@
+import './style.scss'
+
 import AuthLayout from "../../Components/ui/AuthLayout"
 import Input from "../../Components/ui/Input"
 import Button from "../../Components/ui/Button"
@@ -11,7 +13,9 @@ import useForm from "../../Hooks/useForm"
 export default function SettingsPage() {
 
     const { user, updateUserProfile } = useAuth()
-    const [userMsg, setUserMsg] = useState('')
+
+    const [errorMsg, setErrorMsg] = useState('')
+    const [successMsg, setSuccessMsg] = useState('')
 
     const { values, handleChange } = useForm({
         "username": user.username,
@@ -20,36 +24,37 @@ export default function SettingsPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setUserMsg("")
+        setErrorMsg('')
+        setSuccessMsg('')
         const { username, email } = values
         const normalizedEmail = email.trim().toLowerCase()
-        
+
         // Vérification validité des champs
         if (!username || username.trim() === "") {
-            setUserMsg("Le nom d'utilisateur est obligatoire.")
+            setErrorMsg("Le nom d'utilisateur est obligatoire.")
             return
         }
 
         if (!normalizedEmail) {
-            setUserMsg("L'adresse email est obligatoire.")
+            setErrorMsg("L'adresse email est obligatoire.")
             return
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(normalizedEmail)) {
-            setUserMsg("L'adresse Email est invalide.")
+            setErrorMsg("L'adresse Email est invalide.")
             return
         }
 
         try {
             const data = await updateUserProfile({
-            username: username,
-            email: normalizedEmail
-        })
-        setUserMsg(data.message)
+                username: username,
+                email: normalizedEmail
+            })
+            setSuccessMsg(data.message)
 
-    } catch (error) {
-            setUserMsg(error.message)
+        } catch (error) {
+            setErrorMsg(error.message)
         }
     }
 
@@ -57,7 +62,8 @@ export default function SettingsPage() {
         <AuthLayout
             title="Mes Informations Personnels"
         >
-            {userMsg && <p>{userMsg}</p>}
+            {successMsg && <p className="success-msg">{successMsg}</p>}
+            {errorMsg && <p className="error-msg" >{errorMsg}</p>}
             <form onSubmit={handleSubmit} noValidate>
                 <Input
                     label={"Nom d'utilisateur"}
@@ -75,22 +81,16 @@ export default function SettingsPage() {
                     required={false}
                     onChange={handleChange}
                 />
-                <Button
-                    type="submit"
-                >
-                    Enregistrer
-                </Button>
+                <div className='update__btn__wrapper'>
+                    <Button
+                        type="submit"
+                    >
+                        Enregistrer
+                    </Button>
+                </div>
             </form>
-            <div>
-                {
-                    // Accessibilité \\
-                    /* <p>Lien vers la modification du mot de passe</p> */
-                }
-                <Link
-                    to={"/settings/password"}
-                >
-                    Modifier votre mot de passe
-                </Link>
+            <div className="password__link__wrapper">
+                <span>Besoin de changer votre mot de passe ?</span> <Link to={"/settings/password"}>Modifier mon mot de passe</Link>
             </div>
         </AuthLayout>
     )

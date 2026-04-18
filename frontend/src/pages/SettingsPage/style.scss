@@ -1,8 +1,7 @@
-@use '../../styles/var';
-@use '../../styles/mixin';
+@use "../../styles/var";
+@use "../../styles/mixin";
 
-// Bouton de soumission de formulaire
-.login__btn__wrapper button {
+.update__btn__wrapper button {
     margin: 1rem 0;
     padding: 1.5rem;
     width: 100%;
@@ -48,8 +47,7 @@
     }
 }
 
-// Redirection vers le formulaire de création de compte
-.register__link__wrapper {
+.password__link__wrapper {
     margin: 1rem 0;
     font-size: 1.1rem;
     text-align: center;
