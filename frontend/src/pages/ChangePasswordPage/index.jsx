@@ -1,3 +1,5 @@
+import './style.scss'
+
 import AuthLayout from "../../Components/ui/AuthLayout"
 import Input from "../../Components/ui/Input"
 import Button from "../../Components/ui/Button"
@@ -33,7 +35,7 @@ export default function ChangePasswordPage() {
             setErrorMsg('Tous les champs sont obligatoires')
             return
         }
-        
+
         if (newPassword !== confirmPassword) {
             setErrorMsg("Les mots de passe saisis ne sont pas identiques.")
             return
@@ -50,8 +52,8 @@ export default function ChangePasswordPage() {
         <AuthLayout
             title="Modifier Mon Mot De Passe"
         >
-            {errorMsg && <p>{errorMsg}</p>}
-            {successMsg && <p>{successMsg}</p>}
+            {successMsg && <p className="success-msg">{successMsg}</p>}
+            {errorMsg && <p className="error-msg" >{errorMsg}</p>}
             <form onSubmit={handleSubmit}>
                 <Input
                     label={"Votre mot de passe actuel"}
@@ -77,11 +79,14 @@ export default function ChangePasswordPage() {
                     required={false}
                     onChange={handleChange}
                 />
-                <Button
-                    type="submit"
-                >
-                    Enregistrer
-                </Button>
+                <div className='update__btn__wrapper'>
+                    <Button
+                        type="submit"
+                    >
+                        Enregistrer
+                    </Button>
+
+                </div>
             </form>
         </AuthLayout>
     )
