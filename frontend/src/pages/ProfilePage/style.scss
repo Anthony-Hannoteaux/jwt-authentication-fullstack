@@ -1,0 +1,134 @@
+@use '../../styles/var';
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__container {
+        padding: 1.5rem;
+
+        width: 500px;
+        box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 20px;
+
+
+        .title {
+            margin-bottom: -5px;
+            text-align: center;
+            letter-spacing: -2px;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var.$color-title;
+        }
+
+        .sub-info {
+            color: var.$color-primary-light;
+            text-align: center;
+            font-size: 0.9rem;
+
+            .email {
+                font-style: italic;
+            }
+        }
+
+        .welcome__txt {
+            margin: 1.5rem 0;
+            font-size: 1.4rem;
+            text-align: center;
+
+            .user__name {
+                font-weight: 600;
+                color: var.$color-title;
+            }
+        }
+
+        .profile__actions {
+            margin: 1rem 0;
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+
+            a,
+            button {
+                padding: 1.5rem;
+                position: relative;
+                font-size: 0.8rem;
+                font-weight: 600;
+                text-decoration: none;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+
+                border-radius: 30px;
+                cursor: pointer;
+                overflow: hidden;
+
+                transition: all 500ms;
+
+                &:focus,
+                &:hover {
+                    transform: scale(1.02);
+                }
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: -200px;
+                    height: 100%;
+                    width: 0;
+                    transform: skewX(45deg);
+                    z-index: -1;
+                    transition: width 1000ms;
+                }
+
+                &:focus::before,
+                &:hover::before {
+                    width: 250%;
+                }
+            }
+
+            a {
+                background: linear-gradient(75deg, var.$color-primary, var.$color-primary-dark);
+                color: var.$color-primary-light;
+                outline: 1px solid rgba(79, 140, 255, 0.6);
+                box-shadow: 0 8px 20px rgba(79, 140, 255, 0.3);
+
+                &::before {
+                    background: linear-gradient(50deg, var.$color-primary, var.$color-accent);
+                }
+
+                &:focus,
+                &:hover {
+                    outline: 1px solid var.$color-accent;
+                    box-shadow: 0 10px 25px rgba(46, 196, 182, 0.35);
+                }
+            }
+
+            button {
+                background: rgba(255, 31, 42, 0.05);
+                outline: 2px solid rgba(255, 107, 87, 0.9);
+                color: #FF4D57;
+
+                &::before {
+                    background: linear-gradient(50deg,
+                    #FF7A63,
+                    #FF3B47,
+                    #C1121F);
+                    transition: width 800ms;
+                }
+
+                &:focus,
+                &:hover {
+                    outline: 2px solid #FF3B47;
+                    color: #fff;
+                    box-shadow: 0 10px 25px rgba(255, 59, 71, 0.35);
+                }
+            }
+        }
+    }
+}

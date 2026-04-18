@@ -91,7 +91,7 @@ export default function RegisterPage() {
             étant donné qu'on gère de façon manuelle nos vérifications front */}
             <form onSubmit={handleSubmit} noValidate>
                 <Input
-                    label={"Veuillez indiquer votre nom d'utilisateur"}
+                    label={"Nom d'utilisateur"}
                     id={"username"}
                     type={"text"}
                     value={values.username}
@@ -100,7 +100,7 @@ export default function RegisterPage() {
                     onChange={handleChange}
                 />
                 <Input
-                    label={"Veuillez indiquer une adresse email valide"}
+                    label={"Email"}
                     id={"email"}
                     type={"email"}
                     value={values.email}
@@ -109,7 +109,7 @@ export default function RegisterPage() {
                     onChange={handleChange}
                 />
                 <Input
-                    label={"Veuillez indiquer votre mot de passe."}
+                    label={"Mot de passe"}
                     id={"password"}
                     type={"password"}
                     value={values.password}
@@ -118,7 +118,7 @@ export default function RegisterPage() {
                     onChange={handleChange}
                 />
                 <Input
-                    label={"Veuillez confirmer votre mot de passe."}
+                    label={"Confirmation du mot de passe"}
                     id={"confirmPassword"}
                     type={"password"}
                     value={values.confirmPassword}
