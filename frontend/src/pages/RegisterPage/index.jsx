@@ -5,6 +5,7 @@ import { useState } from "react"
 
 import { registerUser } from "../../api/authApi"
 
+import PageMeta from "../../Components/meta/PageMeta"
 import AuthLayout from "../../Components/ui/AuthLayout"
 import Input from "../../Components/ui/Input"
 import Button from "../../Components/ui/Button"
@@ -27,43 +28,50 @@ export default function RegisterPage() {
         e.preventDefault()
         setErrorMsg("")
         const { username, email, password, confirmPassword } = values
+        const normalizedUsername = username.trim()
         const normalizedEmail = email.trim().toLowerCase()
 
         // VERIFICATION FRONT
-        if (!username) {
+        if (!normalizedUsername) {
             setErrorMsg("Le nom d'utilisateur est obligatoire.")
+            document.getElementById("username")?.focus()
             return
         }
 
         if (!normalizedEmail) {
             setErrorMsg("L'adresse email est obligatoire.")
+            document.getElementById("email")?.focus()
             return
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(normalizedEmail)) {
             setErrorMsg("L'adresse Email est invalide.")
+            document.getElementById("email")?.focus()
             return
         }
 
         if (!password) {
             setErrorMsg("Le mot de passe est obligatoire.")
+            document.getElementById("password")?.focus()
             return
         }
 
         if (!confirmPassword) {
             setErrorMsg("La confirmation du mot de passe est obligatoire.")
+            document.getElementById("confirmPassword")?.focus()
             return
         }
 
         if (password !== confirmPassword) {
             setErrorMsg("Les mots de passe saisis ne sont pas identiques.")
+            document.getElementById("confirmPassword")?.focus()
             return
         }
 
         try {
             const data = await registerUser({
-                username: username,
+                username: normalizedUsername,
                 email: normalizedEmail,
                 password: password
             })
@@ -83,57 +91,67 @@ export default function RegisterPage() {
     }
 
     return (
-        <AuthLayout
-            title={"Inscription"}
-        >
-            {errorMsg && <p className="error-msg">{errorMsg}</p>}
-            {/* On désactive la validation native du navigateur pour ce formulaire
+        <>
+            <PageMeta
+                title="JWT Authentication App - Inscription"
+                description="Créez votre compte sécurisé et accédez à votre profil."
+            />
+            <AuthLayout
+                title={"Inscription"}
+            >
+                {errorMsg && <p className="error-msg" role="alert">{errorMsg}</p>}
+                {/* On désactive la validation native du navigateur pour ce formulaire
             étant donné qu'on gère de façon manuelle nos vérifications front */}
-            <form onSubmit={handleSubmit} noValidate>
-                <Input
-                    label={"Nom d'utilisateur"}
-                    id={"username"}
-                    type={"text"}
-                    value={values.username}
-                    required={false}
-                    placeholder={"anon12"}
-                    onChange={handleChange}
-                />
-                <Input
-                    label={"Email"}
-                    id={"email"}
-                    type={"email"}
-                    value={values.email}
-                    required={false}
-                    placeholder={"exemple@email.com"}
-                    onChange={handleChange}
-                />
-                <Input
-                    label={"Mot de passe"}
-                    id={"password"}
-                    type={"password"}
-                    value={values.password}
-                    required={false}
-                    placeholder={""}
-                    onChange={handleChange}
-                />
-                <Input
-                    label={"Confirmation du mot de passe"}
-                    id={"confirmPassword"}
-                    type={"password"}
-                    value={values.confirmPassword}
-                    required={false}
-                    placeholder={""}
-                    onChange={handleChange}
-                />
-                <div className="register__btn__wrapper">
-                    <Button
-                        type="submit"
-                    >
-                        Envoyer
-                    </Button>
-                </div>
-            </form>
-        </AuthLayout>
+                <form onSubmit={handleSubmit} noValidate>
+                    <Input
+                        label={"Nom d'utilisateur"}
+                        id={"username"}
+                        type={"text"}
+                        value={values.username}
+                        required={false}
+                        placeholder={"Username12"}
+                        autoComplete={"username"}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        label={"Email"}
+                        id={"email"}
+                        type={"email"}
+                        value={values.email}
+                        required={false}
+                        placeholder={"exemple@email.com"}
+                        autoComplete={"email"}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        label={"Mot de passe"}
+                        id={"password"}
+                        type={"password"}
+                        value={values.password}
+                        required={false}
+                        placeholder={""}
+                        autoComplete={"new-password"}
+                        onChange={handleChange}
+                        />
+                    <Input
+                        label={"Confirmation du mot de passe"}
+                        id={"confirmPassword"}
+                        type={"password"}
+                        value={values.confirmPassword}
+                        required={false}
+                        placeholder={""}
+                        autoComplete={"new-password"}
+                        onChange={handleChange}
+                    />
+                    <div className="register__btn__wrapper">
+                        <Button
+                            type="submit"
+                        >
+                            M'inscrire
+                        </Button>
+                    </div>
+                </form>
+            </AuthLayout>
+        </>
     )
 }
