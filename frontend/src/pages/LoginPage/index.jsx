@@ -1,5 +1,7 @@
 import "./style.scss"
 import { useNavigate, useLocation, Link } from "react-router-dom"
+// Import des composants de gestions des métadonnées
+import PageMeta from "../../Components/meta/PageMeta"
 // Import des composants UI
 import Input from "../../Components/ui/Input"
 import Button from "../../Components/ui/Button"
@@ -88,40 +90,46 @@ export default function LoginPage() {
     }
 
     return (
-        <AuthLayout
-            title={"Connexion"}
-        >
-            {successMsg && <p className="success-msg">{successMsg}</p>}
-            {errorMsg && <p className="error-msg" >{errorMsg}</p>}
-            <form onSubmit={handleSubmit} noValidate>
-                <Input
-                    label={"Email"}
-                    id={"email"}
-                    type={"email"}
-                    value={values.email}
-                    required={false}
-                    placeholder={"exemple@email.com"}
-                    onChange={handleChange}
-                />
-                <Input
-                    label={"Mot de passe"}
-                    id={"password"}
-                    type={"password"}
-                    value={values.password}
-                    required={false}
-                    onChange={handleChange}
-                />
-                <div className="login__btn__wrapper">
-                    <Button
-                        type="submit"
-                    >
-                        Envoyer
-                    </Button>
+        <>
+            <PageMeta
+                title="JWT Authentication App - Connexion"
+                description="Connectez vous et accédez à votre profil de façon sécurisée."
+            />
+            <AuthLayout
+                title={"Connexion"}
+            >
+                {successMsg && <p className="success-msg">{successMsg}</p>}
+                {errorMsg && <p className="error-msg" >{errorMsg}</p>}
+                <form onSubmit={handleSubmit} noValidate>
+                    <Input
+                        label={"Email"}
+                        id={"email"}
+                        type={"email"}
+                        value={values.email}
+                        required={false}
+                        placeholder={"exemple@email.com"}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        label={"Mot de passe"}
+                        id={"password"}
+                        type={"password"}
+                        value={values.password}
+                        required={false}
+                        onChange={handleChange}
+                    />
+                    <div className="login__btn__wrapper">
+                        <Button
+                            type="submit"
+                        >
+                            Envoyer
+                        </Button>
+                    </div>
+                </form>
+                <div className="register__link__wrapper">
+                    <span>Pas encore de compte ?</span> <Link to={"/register"}>Créer un compte</Link>
                 </div>
-            </form>
-            <div className="register__link__wrapper">
-                <span>Pas encore de compte ?</span> <Link to={"/register"}>Créer un compte</Link>
-            </div>
-        </AuthLayout>
+            </AuthLayout>
+        </>
     )
 }
