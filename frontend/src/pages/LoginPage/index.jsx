@@ -49,6 +49,7 @@ export default function LoginPage() {
         // Vérification que la valeur de l'email ne soit pas une chaîne de caractère vide après nettoyage
         if (!email) {
             setErrorMsg("L'adresse Email est obligatoire.")
+            document.getElementById("email")?.focus()
             return
         }
 
@@ -66,12 +67,14 @@ export default function LoginPage() {
         // @link https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
         if (!emailRegex.test(email)) {
             setErrorMsg("Adresse Email invalide.")
+            document.getElementById("email")?.focus()
             return
         }
 
         // Vérification que la valeur de mot de passe ne soit pas une chaîne de caractère vide après nettoyage
         if (!trimmedPassword) {
             setErrorMsg("Le mot de passe est obligatoire.")
+            document.getElementById("password")?.focus()
             return
         }
 
@@ -98,8 +101,8 @@ export default function LoginPage() {
             <AuthLayout
                 title={"Connexion"}
             >
-                {successMsg && <p className="success-msg">{successMsg}</p>}
-                {errorMsg && <p className="error-msg" >{errorMsg}</p>}
+                {successMsg && <p className="success-msg" role="status">{successMsg}</p>}
+                {errorMsg && <p className="error-msg" role="alert">{errorMsg}</p>}
                 <form onSubmit={handleSubmit} noValidate>
                     <Input
                         label={"Email"}
@@ -109,20 +112,22 @@ export default function LoginPage() {
                         required={false}
                         placeholder={"exemple@email.com"}
                         onChange={handleChange}
-                    />
+                        autoComplete={"email"}
+                        />
                     <Input
                         label={"Mot de passe"}
                         id={"password"}
                         type={"password"}
                         value={values.password}
                         required={false}
+                        autoComplete={"current-password"}
                         onChange={handleChange}
-                    />
+                        />
                     <div className="login__btn__wrapper">
                         <Button
                             type="submit"
                         >
-                            Envoyer
+                            Me connecter
                         </Button>
                     </div>
                 </form>

@@ -9,8 +9,8 @@ import "./style.scss"
 export default function AuthLayout({ title, children }) {
     return (
         <main className="auth-layout">
-            <section className="auth-layout__section">
-                <h1 className="auth-layout__section__title">
+            <section className="auth-layout__section" aria-labelledby="auth-title">
+                <h1 className="auth-layout__section__title" id="auth-title">
                     {title}
                 </h1>
                 {children}

@@ -11,7 +11,7 @@ import "./style.scss"
  * @param {string} props.placeholder
  * @param {Function} props.onChange
  */
-export default function Input({ label, id, type, value, required, placeholder, onChange }) {
+export default function Input({ label, id, type, value, required, placeholder, autoComplete, onChange }) {
     return (
         <div className="input-group">
             <label 
@@ -28,6 +28,7 @@ export default function Input({ label, id, type, value, required, placeholder, o
             value={value}
             required={required}
             placeholder={placeholder}
+            autoComplete={autoComplete}
             onChange={onChange}
             />
         </div>
