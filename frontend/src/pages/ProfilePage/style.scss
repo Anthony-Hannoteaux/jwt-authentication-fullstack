@@ -25,24 +25,43 @@
             color: var.$color-title;
         }
 
-        .sub-info {
-            color: var.$color-primary-light;
-            text-align: center;
-            font-size: 0.9rem;
-
-            .email {
-                font-style: italic;
-            }
-        }
-
         .welcome__txt {
-            margin: 1.5rem 0;
+            margin: 2rem 0;
             font-size: 1.4rem;
             text-align: center;
+        }
 
-            .user__name {
+        .profile__infos {
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+
+            .infos__title {
+                margin-bottom: 2rem;
+                letter-spacing: -2px;
+                font-size: 2rem;
                 font-weight: 600;
                 color: var.$color-title;
+            }
+
+            .infos__list {
+                display: flex;
+                justify-content: space-evenly;
+                width: 100%;
+
+                dt {
+                    margin-bottom: .5rem;
+                    color: var.$color-sub-title;
+                    font-size: 1.2rem;
+                }
+    
+                dd {
+                    text-align: center;
+                    color: var.$color-primary-light;
+                }
             }
         }
 
@@ -51,7 +70,6 @@
             padding-top: 1rem;
             display: flex;
             justify-content: space-between;
-            border-top: 1px solid rgba(255, 255, 255, 0.6);
 
             a,
             button {
@@ -112,13 +130,13 @@
             button {
                 background: rgba(255, 31, 42, 0.05);
                 outline: 2px solid rgba(255, 107, 87, 0.9);
-                color: #FF4D57;
+                color: var.$color-primary-light;
 
                 &::before {
                     background: linear-gradient(50deg,
-                    #FF7A63,
-                    #FF3B47,
-                    #C1121F);
+                            #FF7A63,
+                            #FF3B47,
+                            #C1121F);
                     transition: width 800ms;
                 }
 
