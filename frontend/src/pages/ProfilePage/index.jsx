@@ -23,7 +23,7 @@ export default function ProfilePage() {
             />
             <main className="main profile">
                 <section className="profile__container">
-                    <h1 className="title">Mon Profil</h1>
+                    <h1 className="title">Mon profil</h1>
                     <p className="welcome__txt">Bienvenue sur votre espace utilisateur.</p>
                     <div className="profile__infos">
                         <h2 className="infos__title">Mes informations</h2>
