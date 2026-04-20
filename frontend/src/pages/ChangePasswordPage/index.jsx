@@ -1,5 +1,6 @@
 import './style.scss'
 
+import PageMeta from "../../Components/meta/PageMeta"
 import AuthLayout from "../../Components/ui/AuthLayout"
 import Input from "../../Components/ui/Input"
 import Button from "../../Components/ui/Button"
@@ -27,17 +28,28 @@ export default function ChangePasswordPage() {
         setSuccessMsg('')
 
         const { currentPassword, newPassword, confirmPassword } = values
-        if (
-            currentPassword === undefined || currentPassword.trim() === "" ||
-            newPassword === undefined || newPassword.trim() === "" ||
-            confirmPassword === undefined || confirmPassword.trim() === ""
-        ) {
-            setErrorMsg('Tous les champs sont obligatoires')
+
+        if (currentPassword === undefined || currentPassword.trim() === "") {
+            setErrorMsg('Le mot de passe actuel est obligatoire')
+            document.getElementById('currentPassword')?.focus()
+            return
+        }
+
+        if (newPassword === undefined || newPassword.trim() === "") {
+            setErrorMsg('Le nouveau mot de passe est obligatoire')
+            document.getElementById('newPassword')?.focus()
+            return
+        }
+
+        if (confirmPassword === undefined || confirmPassword.trim() === "") {
+            setErrorMsg('La confirmation du mot de passe est obligatoire')
+            document.getElementById('confirmPassword')?.focus()
             return
         }
 
         if (newPassword !== confirmPassword) {
             setErrorMsg("Les mots de passe saisis ne sont pas identiques.")
+            document.getElementById('confirmPassword')?.focus()
             return
         }
         try {
@@ -49,45 +61,53 @@ export default function ChangePasswordPage() {
     }
 
     return (
-        <AuthLayout
-            title="Modifier Mon Mot De Passe"
-        >
-            {successMsg && <p className="success-msg">{successMsg}</p>}
-            {errorMsg && <p className="error-msg" >{errorMsg}</p>}
-            <form onSubmit={handleSubmit}>
-                <Input
-                    label={"Votre mot de passe actuel"}
-                    id={"currentPassword"}
-                    type={"password"}
-                    value={values.currentPassword}
-                    required={false}
-                    onChange={handleChange}
-                />
-                <Input
-                    label={"Nouveau mot de passe"}
-                    id={"newPassword"}
-                    type={"password"}
-                    value={values.newPassword}
-                    required={false}
-                    onChange={handleChange}
-                />
-                <Input
-                    label={"Confirmation de mot de passe"}
-                    id={"confirmPassword"}
-                    type={"password"}
-                    value={values.confirmPassword}
-                    required={false}
-                    onChange={handleChange}
-                />
-                <div className='update__btn__wrapper'>
-                    <Button
-                        type="submit"
-                    >
-                        Enregistrer
-                    </Button>
-
-                </div>
-            </form>
-        </AuthLayout>
+        <>
+            <PageMeta
+                title="JWT Authentication App - Modifier mon mot de passe"
+                description="Modifiez votre mot de passe de façon sécurisée."
+            />
+            <AuthLayout
+                title="Modifier mon mot de passe"
+            >
+                {successMsg && <p className="success-msg" role='status'>{successMsg}</p>}
+                {errorMsg && <p className="error-msg" role='alert'>{errorMsg}</p>}
+                <form onSubmit={handleSubmit} noValidate>
+                    <Input
+                        label={"Votre mot de passe actuel"}
+                        id={"currentPassword"}
+                        type={"password"}
+                        value={values.currentPassword}
+                        required={false}
+                        autoComplete={"current-password"}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        label={"Nouveau mot de passe"}
+                        id={"newPassword"}
+                        type={"password"}
+                        value={values.newPassword}
+                        required={false}
+                        autoComplete={"new-password"}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        label={"Confirmation du nouveau mot de passe"}
+                        id={"confirmPassword"}
+                        type={"password"}
+                        value={values.confirmPassword}
+                        required={false}
+                        autoComplete={"new-password"}
+                        onChange={handleChange}
+                    />
+                    <div className='update__btn__wrapper'>
+                        <Button
+                            type="submit"
+                        >
+                            Modifier mon mot de passe
+                        </Button>
+                    </div>
+                </form>
+            </AuthLayout>
+        </>
     )
 }
