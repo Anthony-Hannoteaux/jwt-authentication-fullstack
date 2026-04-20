@@ -1,8 +1,9 @@
 import "./style.scss";
 
+import PageMeta from "../../Components/meta/PageMeta"
 import Button from "../../Components/ui/Button"
 
-import { useNavigate, Link } from "react-router"
+import { useNavigate, Link } from "react-router-dom"
 import { useAuth } from "../../Context/AuthContext"
 
 export default function ProfilePage() {
@@ -15,25 +16,43 @@ export default function ProfilePage() {
     }
 
     return (
-        <main className="main profile">
-            <div className="profile__container">
-                <h1 className="title">Mon Profil</h1>
-                <p className="sub-info">Adresse mail : <span className="email">{user.email}</span></p>
-                <p className="welcome__txt">Bienvenue sur votre page de profil <span className="user__name">{user.username}</span></p>
-                <div className="profile__actions">
-                    <Link
-                        to={"/settings"}
-                    >
-                        Modifier mes informations
-                    </Link>
-                    <Button
-                        type="button"
-                        onClick={handleLogout}
-                    >
-                        Déconnexion
-                    </Button>
-                </div>
-            </div>
-        </main>
+        <>
+            <PageMeta
+                title="JWT Authentication App - Profil utilisateur"
+                description="Consultez vos informations utilisateur et modifiez votre profil."
+            />
+            <main className="main profile">
+                <section className="profile__container">
+                    <h1 className="title">Mon Profil</h1>
+                    <p className="welcome__txt">Bienvenue sur votre espace utilisateur.</p>
+                    <div className="profile__infos">
+                        <h2 className="infos__title">Mes informations</h2>
+                        <dl className="infos__list">
+                            <div className="infos__wrapper">
+                                <dt>Nom d'utilisateur</dt>
+                                <dd>{user.username}</dd>
+                            </div>
+                            <div className="infos__wrapper">
+                                <dt>Adresse email</dt>
+                                <dd>{user.email}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                    <div className="profile__actions">
+                        <Link
+                            to={"/settings"}
+                        >
+                            Modifier mes informations
+                        </Link>
+                        <Button
+                            type="button"
+                            onClick={handleLogout}
+                        >
+                            Déconnexion
+                        </Button>
+                    </div>
+                </section>
+            </main>
+        </>
     )
 }
