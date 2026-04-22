@@ -1,4 +1,5 @@
 @use '../../styles/var';
+@use '../../styles/mixin';
 
 .profile {
     display: flex;
@@ -15,6 +16,10 @@
         border: 1px solid rgba(255, 255, 255, 0.4);
         border-radius: 20px;
 
+        @include mixin.md {
+            width: 80%;
+            min-width: 450px;
+        }
 
         .title {
             margin-bottom: -5px;
@@ -23,12 +28,20 @@
             font-size: 3rem;
             font-weight: 700;
             color: var.$color-title;
+
+            @include mixin.md {
+                font-size: 2.2rem;
+            }
         }
 
         .welcome__txt {
             margin: 2rem 0;
             font-size: 1.4rem;
             text-align: center;
+
+            @include mixin.md {
+                font-size: 1.1rem;
+            }
         }
 
         .profile__infos {
@@ -45,6 +58,10 @@
                 font-size: 2rem;
                 font-weight: 600;
                 color: var.$color-title;
+
+                @include mixin.md {
+                    font-size: 1.6rem;
+                }
             }
 
             .infos__list {
@@ -56,27 +73,41 @@
                     margin-bottom: .5rem;
                     color: var.$color-sub-title;
                     font-size: 1.2rem;
+
+                    @include mixin.md {
+                        font-size: 1rem;
+                    }
+                
                 }
-    
+                
                 dd {
                     text-align: center;
                     color: var.$color-primary-light;
+
+                    @include mixin.md {
+                        font-size: .9rem;
+                    }
                 }
             }
         }
-
+        
         .profile__actions {
             margin: 1rem 0;
             padding-top: 1rem;
             display: flex;
             justify-content: space-between;
-
+            
+            @include mixin.md {
+                flex-direction: column;
+                justify-content: center;
+            }
             a,
             button {
                 padding: 1.5rem;
                 position: relative;
                 font-size: 0.8rem;
                 font-weight: 600;
+                text-align: center;
                 text-decoration: none;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
@@ -115,6 +146,10 @@
                 color: var.$color-primary-light;
                 outline: 1px solid rgba(79, 140, 255, 0.6);
                 box-shadow: 0 8px 20px rgba(79, 140, 255, 0.3);
+
+                @include mixin.md {
+                    margin-bottom: 1rem;
+                }
 
                 &::before {
                     background: linear-gradient(50deg, var.$color-primary, var.$color-accent);
