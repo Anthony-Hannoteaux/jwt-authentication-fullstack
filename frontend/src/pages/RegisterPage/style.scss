@@ -21,6 +21,10 @@
 
     transition: all 500ms;
 
+    @include mixin.md {
+        font-size: 1rem;
+    }
+
     &:focus,
     &:hover {
         transform: scale(1.01);
