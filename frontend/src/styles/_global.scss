@@ -4,11 +4,11 @@ html,
 body,
 #root,
 main {
-    height: 100%;
+    min-height: 100%;
 }
 
 body {
-    background: url(../assets/tiles.png);
+    background: no-repeat center url(../assets/tiles.png);
     background-size: cover;
     font-family: var.$primary-font;
     color: #fff;

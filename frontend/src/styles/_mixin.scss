@@ -2,10 +2,24 @@
 @mixin user-indication-msg($bg-color) {
     padding: 1rem;
     margin-bottom: 1rem;
-
+    
+    padding: 1rem;
     font-size: 1.2rem;
     text-align: center;
-
+    
     border-radius: 10px;
     background-color: $bg-color;
+    
+    @include md {
+        padding: .8rem;
+        font-size: 1rem;
+
+    }
+}
+
+// Breakpoint
+@mixin md {
+    @media (max-width: 768px) {
+        @content;
+    }
 }
