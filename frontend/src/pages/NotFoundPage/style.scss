@@ -1,4 +1,5 @@
 @use '../../styles/var';
+@use '../../styles/mixin';
 
 .not-found {
     display: flex;
@@ -29,13 +30,21 @@
             font-size: 3rem;
             font-weight: 700;
             color: var.$color-title;
+            
+            @include mixin.md {
+                font-size: 2.4rem;
+            }
         }
-
+        
         p {
             font-size: 1.4rem;
             text-align: center;
-        }
 
+            @include mixin.md {
+                font-size: 1.2rem;
+            }
+        }
+        
         a {
             color: var.$color-link;
             font-weight: 600;
