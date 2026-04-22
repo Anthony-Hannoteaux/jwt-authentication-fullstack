@@ -99,8 +99,9 @@ export default function ChangePasswordPage() {
                         autoComplete={"new-password"}
                         onChange={handleChange}
                     />
-                    <div className='update__btn__wrapper'>
+                    <div>
                         <Button
+                            className='update__password__btn'
                             type="submit"
                         >
                             Modifier mon mot de passe

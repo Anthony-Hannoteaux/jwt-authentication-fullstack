@@ -1,7 +1,7 @@
 @use "../../styles/var";
 @use "../../styles/mixin";
 
-.update__btn__wrapper button {
+.update__password__btn {
     margin: 1rem 0;
     padding: 1.5rem;
     width: 100%;
@@ -20,6 +20,10 @@
     box-shadow: 0 8px 20px rgba(79, 140, 255, 0.3);
 
     transition: all 500ms;
+
+    @include mixin.md {
+        font-size: 1rem;
+    }
 
     &:focus,
     &:hover {
