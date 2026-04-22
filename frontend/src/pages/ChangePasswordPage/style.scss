@@ -47,24 +47,6 @@
     }
 }
 
-.password__link__wrapper {
-    margin: 1rem 0;
-    font-size: 1.1rem;
-    text-align: center;
-
-    a {
-        color: var.$color-link;
-        font-weight: 600;
-        text-decoration: none;
-
-        &:focus,
-        &:hover {
-            color: var.$color-link-hover;
-            text-decoration: underline;
-        }
-    }
-}
-
 // Messages d'information destinés à l'utilisateur
 .error-msg {
     @include mixin.user-indication-msg(var.$color-error)

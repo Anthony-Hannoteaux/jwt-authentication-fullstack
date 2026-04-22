@@ -92,8 +92,9 @@ export default function SettingsPage() {
                         autoComplete={"email"}
                         onChange={handleChange}
                     />
-                    <div className='update__btn__wrapper'>
+                    <div>
                         <Button
+                            className='update__profile__btn'
                             type="submit"
                         >
                             Enregistrer
