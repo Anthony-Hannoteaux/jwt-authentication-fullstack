@@ -115,6 +115,7 @@ Des améliorations de base ont été mises en place :
 
 * Amélioration de la navigation (ajout d'un accès à l'accueil sur l'ensemble des pages)
 * Accessibilité avancée
+* Amélioration de l'expérience utilisateur lors des appels API avec l'ajour d'un indicateur (loader)
 * Responsive plus poussé (mobile complet)
 * Ajout de tests (unitaires / fonctionnels / e2e)
 * Amélioration UX des formulaires
