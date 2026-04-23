@@ -1,89 +1,132 @@
-# Backend Auth API - JWT + Refresh et Access Token
+# JWT Authentication App — Backend
 
-Dernière mise à jour : 25/02/2026
+## 1. Présentation
 
-Backend d'authentification développé avec Node.js, Express et PostgreSQL.
+Ce projet est une API backend développée avec Node.js et Express dans le cadre d’un projet fullstack d’authentification.
 
-Le projet comprend un système complet d'authentification sécurisé basé sur :
+Il implémente un système d’authentification sécurisé basé sur l’utilisation combinée de **JWT (Access Token)** et **Refresh Token**.
 
-- Access Token JWT (courte durée de vie)
-- Refresh Token stocké en cookie httpOnly
-- Gestion de session en base de donnée
+Il simule un système d'authentification complet que l'on pourrait retrouver dans d'autres applications réelles.
 
 ---
 
-## Stack
+## 2. Stack technique
 
-- Node.js
-- Express
-- bcrypt
-- JWT
-- cookie-parser
-- PostgreSQL
-- RestClient (tests des requêtes HTTP)
+* **Node.js**
+* **Express**
+* **PostgreSQL**
+* **pg**
+* **dotenv**
+* **JWT (jsonwebtoken)**
+* **bcrypt**
+* **validator**
+* **cors**
+* **cookie-parser**
 
 ---
 
-## Architecture
-
-Une architecture MVC fut utilisée pour l'élaboration du projet :
-
-<details>
-    <summary>Fichier représentatif de l'architecture du projet</summary>
-    <br>
-    <img src="../docs/architecture-backend.JPG">
-</details>
-
-## Fonctionnalités implémentées
+## 3. Fonctionnalités
 
 ### Authentification
 
-- POST `/api/auth/login`
-- POST `/api/auth/refresh`
-- POST `/api/auth/logout`
+* Création de session utilisateur
+* Génération d’Access Token
+* Génération de Refresh Token
+* Rafraîchissement de session
+* Modification données utilisateur
+* Déconnexion utilisateur
 
-### Route protégée
+### Endpoints principaux
 
-- GET `/api/user/me`
+* `POST /api/auth/register`
+* `POST /api/auth/login`
+* `POST /api/auth/refresh`
+* `POST /api/auth/logout`
+
+### Routes protégées
+
+* `GET /api/user/me`
+* `PATCH /api/user/me`
+* `PATCH /api/user/password`
 
 ---
 
-## Sécurité
+## 4. Architecture du projet
+
+Le projet suit une architecture de type **MVC** :
+
+* `controllers/` => logique métier des routes
+* `models/` => interaction avec la base de données
+* `routes/` => définition des endpoints
+* `middlewares/` => gestion de l’authentification et des vérifications
+
+---
+
+## 5. Points techniques clés
+
+* Implémentation d’un système **Access Token / Refresh Token**
+* Séparation claire des responsabilités (MVC)
+* Vérification des tokens via middleware
+* Gestion des sessions en base de données
+* Validation des entrées utilisateur
+* Gestion centralisée des erreurs
+
+---
+
+## 6. Sécurité
 
 ### Access Token
 
-- JWT signé avec clé secrète
-- Durée de vie : 15 minutes
-- Contient `sub` <i>(subject)</i> : userId
+* JWT signé avec une clé secrète
+* Durée de vie courte (15 minutes)
+* Contient l’identifiant utilisateur (`sub`)
 
 ### Refresh Token
 
-- Généré de façon aléatoire via `crypto.randomBytes`
-- Hash `SHA-256` stocké en base de donnée
-- Cookie `httpOnly`
-- Durée de vie : 7 jours
-- Révocation possible (après logout)
+* Généré via `crypto.randomBytes`
+* Hashé (`SHA-256`) avant stockage en base => Fonction de hachage
+* Stocké côté client via cookie `httpOnly` => Protection faille XSS
+* Durée de vie : 7 jours
+* Révocation possible (logout)
 
-### Protection implémentée
+### Mesures de sécurité implémentées
 
-- Messages d'erreur génériques (anti-énumération)
-- Vérification `Bearer` Token
-- Vérification signature JWT
-- Vérification expiration
-- Vérification session valide en base de donnée
-- Révocation des sessions
+* Messages d’erreur génériques (anti-énumération)
+* Vérification du header `Authorization: Bearer`
+* Vérification de la signature JWT
+* Vérification de l’expiration des tokens
+* Vérification des sessions actives en base
+* Révocation des sessions
 
 ---
 
-## Installation
+## 7. Améliorations possibles
 
-``` bash
+* Affiner les vérifications des données (contrôles plus stricts)
+* Mise en place de la rotation des Refresh Tokens
+* Ajout d’un nettoyage automatique des sessions expirées
+* Sécurisation des cookies en production (HTTPS, SameSite) => Protection attaque CSRF
+* Mise en place de tests (unitaires / intégration)
+* Ajout de logs structurés (monitoring)
+
+---
+
+## 8. Installation
+
+### Prérequis
+
+* Node.js
+* PostgreSQL
+
+### Installation
+
+```bash
 git clone https://github.com/Anthony-Hannoteaux/jwt-authentication-fullstack
 cd backend
 npm install
 ```
 
-Créer un fichier `.env` (voir modèle `.env.example`) :
+Créer un fichier `.env` (voir `.env.example`) :
 
 ```bash
 PORT=
@@ -95,18 +138,20 @@ PGPORT=
 JWT_SECRET=
 ```
 
-Après avoir initialisé les valeurs des variables d'environnement.
-<br>
 Lancer le serveur :
 
 ```bash
 npm run dev
 ```
 
-## Evolutions possibles/prévues
+---
 
-- Ajout CORS pour intégration front React
-- Rotation des refresh tokens
-- Nettoyage automatique des sessions expirées
-- Ajout de méthodes CRUD complémentaires (création d'un nouvel utilisateur)
-- Sécure cookies en production (HTTPS)
+## Remarque
+
+Ce projet est une démonstration technique mettant en valeur la mise en place d’un système d’authentification sécurisé côté backend.
+
+Il a pour objectif de démontrer la capacité à :
+
+* Gérer des flux d’authentification
+* Sécuriser des sessions utilisateur
+* Structurer une API maintenable et évolutive
