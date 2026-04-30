@@ -138,6 +138,11 @@ PGPORT=
 JWT_SECRET=
 ```
 
+Initialisation de la base de donnée :
+```bash
+npm run migration
+```
+
 Lancer le serveur :
 
 ```bash
